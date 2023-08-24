@@ -62,7 +62,13 @@ public class HexRenderer : MonoBehaviour
 
     private void DrawFaces()
     {
+        m_faces = new List<Face>();
 
+        // Top faces
+        for(int point =0; point<6; point++)
+        {
+
+        }
     }
 
     private void CombineFaces()
@@ -89,5 +95,17 @@ public class HexRenderer : MonoBehaviour
         m_mesh.triangles = tris.ToArray();
         m_mesh.uv = uvs.ToArray();
         m_mesh.RecalculateNormals();
+    }
+
+    private Face CreateFace(float innerRad, float outerRad, float heightA, float heightB, int point, bool reverse = false)
+    {
+        return new Face();
+    }
+
+    protected Vector3 GetPoint(float size, float height, int index)
+    {
+        float angle_deg = 60 * index;
+        float angle_rad = Mathf.PI / 180f * angle_deg;
+        return new Vector3((size * Mathf.Cos(angle_rad)), height, size * Mathf.Sin(angle_rad));
     }
 }
