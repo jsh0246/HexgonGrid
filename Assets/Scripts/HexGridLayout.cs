@@ -14,14 +14,17 @@ public class HexGridLayout : MonoBehaviour
     public bool isFlatTopped;
     public Material material;
 
+    private bool startDraw = false;
+
     private void OnEnable()
     {
         LayoutGrid();
+        startDraw = true;
     }
 
     private void OnValidate()
     {
-        if(Application.isPlaying)
+        if(Application.isPlaying && startDraw)
         {
             LayoutGrid();
         }
