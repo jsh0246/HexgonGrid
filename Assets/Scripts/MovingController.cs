@@ -7,15 +7,19 @@ public class MovingController : MonoBehaviour
 {
     public Tilemap map;
 
+    private Grid grid;
+
 
     private void Start()
     {
-        
+        grid = gameObject.GetComponent<Grid>();
     }
 
     private void Update()
     {
-        PlayerInput();
+        //PlayerInput();
+
+        Click();
     }
 
     private void PlayerInput()
@@ -35,5 +39,17 @@ public class MovingController : MonoBehaviour
     {
         transform.position += new Vector3(0.5f, 0, 0);
 
+    }
+
+    private void Click()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3Int pos = grid.WorldToCell(mouseWorldPos);
+
+            print(mouseWorldPos);
+            print(pos);
+        }
     }
 }
