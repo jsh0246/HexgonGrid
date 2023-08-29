@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Click : MonoBehaviour
 {
-    private Camera cam;
+    public Camera cam;
     public GameObject o;
+    public Material M;
 
     private void Start()
     {
-        cam = Camera.main;
+
     }
 
     private void Update()
@@ -19,20 +20,39 @@ public class Click : MonoBehaviour
 
     private void MyClick()
     {
-        if (Input.GetMouseButtonDown(1))
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    Vector3 mPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cam.transform.position.z);
+        //    Vector3 mP = Input.mousePosition;
+
+        //    //Vector3 mPos = new Vector3(Input.mousePosition.x / Camera.main.scaledPixelWidth, Input.mousePosition.y / Camera.main.scaledPixelHeight, 10f);
+
+        //    //print("MousePosition " + mPos);
+        //    Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mPos);
+        //    //Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(mPos);
+        //    //Vector3 mouseWorldPos = Camera.main.ScreenToViewportPoint(mP);
+        //    //Vector3Int pos = grid.WorldToCell(mouseWorldPos);
+
+        //    print("MouseWorldPosition : " + mouseWorldPos);
+
+        //    Instantiate(o, mouseWorldPos, Quaternion.identity);
+        //    //print(pos);
+        //}
+
+        if(Input.GetMouseButtonDown(0))
         {
-            Vector3 mPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.transform.position.z);
-            Vector3 mP = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            //print("MousePosition " + mPos);
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mPos);
-            //Vector3Int pos = grid.WorldToCell(mouseWorldPos);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Floor")))
+            {
+                print(hit.collider.gameObject.transform.position);
+                Material[] t = hit.collider.gameObject.GetComponent<MeshRenderer>().materials;
 
-            print("MouseWorldPosition : " + mouseWorldPos);
-
-            Instantiate(o, mouseWorldPos, Quaternion.identity);
-            //print(pos);
+                hit.collider.gameObject.GetComponent<MeshRenderer>().material = M;
+            }
         }
+
     }
 
     //private void OnGUI()
