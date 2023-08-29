@@ -7,6 +7,7 @@ public class Click : MonoBehaviour
     public Camera cam;
     public GameObject o;
     public Material M;
+    public Grid grid;
 
     private void Start()
     {
@@ -20,37 +21,30 @@ public class Click : MonoBehaviour
 
     private void MyClick()
     {
-        //if (Input.GetMouseButtonDown(1))
+        //if(Input.GetMouseButtonDown(0))
         //{
-        //    Vector3 mPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cam.transform.position.z);
-        //    Vector3 mP = Input.mousePosition;
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    RaycastHit hit;
 
-        //    //Vector3 mPos = new Vector3(Input.mousePosition.x / Camera.main.scaledPixelWidth, Input.mousePosition.y / Camera.main.scaledPixelHeight, 10f);
+        //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Floor")))
+        //    {
+        //        print(hit.collider.gameObject.transform.position);
+        //        Material[] t = hit.collider.gameObject.GetComponent<MeshRenderer>().materials;
 
-        //    //print("MousePosition " + mPos);
-        //    Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mPos);
-        //    //Vector3 mouseWorldPos = Camera.main.ViewportToWorldPoint(mPos);
-        //    //Vector3 mouseWorldPos = Camera.main.ScreenToViewportPoint(mP);
-        //    //Vector3Int pos = grid.WorldToCell(mouseWorldPos);
-
-        //    print("MouseWorldPosition : " + mouseWorldPos);
-
-        //    Instantiate(o, mouseWorldPos, Quaternion.identity);
-        //    //print(pos);
+        //        hit.collider.gameObject.GetComponent<MeshRenderer>().material = M;
+        //    }
         //}
 
-        if(Input.GetMouseButtonDown(0))
+
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Floor")))
-            {
-                print(hit.collider.gameObject.transform.position);
-                Material[] t = hit.collider.gameObject.GetComponent<MeshRenderer>().materials;
+            Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
+            //print(worldPoint);
 
-                hit.collider.gameObject.GetComponent<MeshRenderer>().material = M;
-            }
+            Vector3Int position = grid.WorldToCell(worldPoint);
+            print(position);
         }
 
     }
