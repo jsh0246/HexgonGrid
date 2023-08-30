@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Click : MonoBehaviour
 {
@@ -8,15 +9,25 @@ public class Click : MonoBehaviour
     public GameObject o;
     public Material M;
     public Grid grid;
+    public Tilemap tilemap;
+    public TileBase tilebase;
+
+
 
     private void Start()
     {
-
+        MyCrdnt();
     }
 
     private void Update()
     {
         MyClick();
+        
+    }
+
+    private void MyCrdnt()
+    {
+        //tilemap = grid.GetComponentInChildren<Tilemap>();
     }
 
     private void MyClick()
@@ -44,16 +55,25 @@ public class Click : MonoBehaviour
             //print(worldPoint);
 
             Vector3Int position = grid.WorldToCell(worldPoint);
-            print(position);
+            //print(position);
 
-            RaycastHit2D hit = Physics2D.Raycast(cam.transform.position, cam.transform.forward, Mathf.Infinity);
-            print(hit);
-            if (hit) {
-                hit.transform.GetComponent<SpriteRenderer>().color = Color.red;
-            }
+            tilemap.SetTile(position, tilebase);
+
+
+            //tilemap.SetColor(position, Color.red);
+            //TileBase t = tilemap.GetTile(position);
+
+            //tilemap.SetColor(position, Color.red);
+
+
+
+            //RaycastHit2D hit = Physics2D.Raycast(cam.transform.position, cam.transform.forward, Mathf.Infinity);
+            //print(hit);
+            //if (hit) {
+            //    hit.transform.GetComponent<SpriteRenderer>().color = Color.red;
+            //}
 
         }
-
     }
 
     //private void OnGUI()
