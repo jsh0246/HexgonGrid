@@ -45,6 +45,13 @@ public class Click : MonoBehaviour
 
             Vector3Int position = grid.WorldToCell(worldPoint);
             print(position);
+
+            RaycastHit2D hit = Physics2D.Raycast(cam.transform.position, cam.transform.forward, Mathf.Infinity);
+            print(hit);
+            if (hit) {
+                hit.transform.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+
         }
 
     }
