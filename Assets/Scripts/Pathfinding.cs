@@ -64,7 +64,7 @@ public class FValueComparer : IComparer<Vector2Int>
 
         if (AStarGrid.aStarGrid[x].f < AStarGrid.aStarGrid[y].f)
             return -1;
-        else if (AStarGrid.aStarGrid[x].f >= AStarGrid.aStarGrid[y].f)
+        else if (AStarGrid.aStarGrid[x].f > AStarGrid.aStarGrid[y].f)
             return 1;
         else return 1;
     }
@@ -168,8 +168,8 @@ public class Pathfinding : MonoBehaviour
             }
         }
 
-        foreach (var v in openList)
-            print(v);
+        //foreach (var v in openList)
+        //    print(v);
 
         // 시작점은 OpenList에서 제거 후 ClosedList로
         print(openList.Count);
@@ -183,8 +183,8 @@ public class Pathfinding : MonoBehaviour
         //print(openList.ElementAt(0));
 
         
-        foreach (var v in openList)
-            print(v);
+        //foreach (var v in openList)
+        //    print(v);
 
 
         //var sortedDict = openList.OrderBy(x => x.Value.f).ToList();
