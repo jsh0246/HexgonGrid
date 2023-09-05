@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,8 @@ public class Test : MonoBehaviour
     private void Start()
     {
         //Test1();
-        Test2();
+        //Test2();
+        Test3();
     }
 
     private void Test1()
@@ -77,14 +79,34 @@ public class Test : MonoBehaviour
         //Cell c4 = new Cell(new Vector2Int(0, 0), 3, 8);
         //Cell c5 = new Cell(new Vector2Int(0, 0), 4, 9);
 
-        
+
 
         //aStarGrid.Add(c1);
 
-        //foreach(KeyValuePair<Vector2Int, Cell> pair in aStarGrid)
+        //foreach (KeyValuePair<Vector2Int, Cell> pair in aStarGrid)
         //{
         //    print(pair.Key);
         //    pair.Value.PrintCell();
         //}
+    }
+
+    private void Test3()
+    {
+        Dictionary<int, string> dict = new Dictionary<int, string>();
+
+        dict.Add(0, "조상치");
+        dict.Add(1, "김상치");
+        dict.Add(2, "김상치");
+        dict.Add(3, "이상치");
+        dict.Add(4, "박상치");
+
+        try
+        {
+            dict.Add(0, "정상치");
+        } catch(ArgumentException e)
+        {
+            print("do sth");
+            print(e);
+        }
     }
 }

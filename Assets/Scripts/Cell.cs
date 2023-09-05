@@ -5,7 +5,8 @@ using UnityEngine;
 public class Cell
 {
     //public Vector2Int pos;
-    public float f, g, h;
+    public float f { get; private set; }
+    private float g, h;
 
     public Cell(float g, float h)
     {
