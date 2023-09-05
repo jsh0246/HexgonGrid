@@ -20,8 +20,21 @@ public class Cell
     }
 }
 
+public class Cell
+{
+    private int f, g, h;
+
+    public Cell(int g, int h)
+    {
+        this.f = g + h;
+        this.g = g;
+        this.h = h;
+    }
+}
+
 public class Pathfinding : MonoBehaviour
 {
+<<<<<<< HEAD
     private Grid grid;
     private Player player;
     private Vector2Int goal;
@@ -36,16 +49,50 @@ public class Pathfinding : MonoBehaviour
 
         openList = new List<Vector2Int>();
         closedList = new List<Vector2Int>();
+=======
+    [SerializeField] private Grid grid;
+
+    private List<Cell> openList, closedList;
+
+    private void Start()
+    {
+        openList = new List<Cell>();
+        closedList = new List<Cell>();
+>>>>>>> 805693b00fcac335af3ad5b4b2b8d8747b79d335
     }
 
     private void Update()
     {
+<<<<<<< HEAD
         SetGoal();
 
         AStar();
     }
 
     private void SetGoal()
+=======
+        MousePositionToGridCoordinate();
+    }
+
+    // 클랙했을 때 해당 좌표를 가져온다
+    private Vector3Int MousePositionToGridCoordinate()
+    {
+        Vector3Int pos = Vector3Int.zero;
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            pos = grid.WorldToCell(mouseWorldPos);
+
+            print(pos);
+        }
+
+        return pos;
+    }
+
+    // A* Algorithm
+    private void AStar()
+>>>>>>> 805693b00fcac335af3ad5b4b2b8d8747b79d335
     {
         if (Input.GetMouseButtonDown(1))
         {
@@ -86,4 +133,6 @@ public class Pathfinding : MonoBehaviour
     {
         return Mathf.Abs(s.x - t.x) + Mathf.Abs(s.y - t.y);
     }
+
+
 }
