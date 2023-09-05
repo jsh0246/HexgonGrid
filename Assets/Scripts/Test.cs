@@ -7,6 +7,12 @@ public class Test : MonoBehaviour
 {
     private void Start()
     {
+        //Test1();
+        Test2();
+    }
+
+    private void Test1()
+    {
         Mesh mesh = new Mesh();
 
         Vector3[] vertices = new Vector3[3];
@@ -60,5 +66,25 @@ public class Test : MonoBehaviour
         mesh.triangles = triangles;
 
         GetComponent<MeshFilter>().mesh = mesh;
+    }
+    private void Test2()
+    {
+        //Dictionary<Vector2Int, Cell> aStarGrid = new Dictionary<Vector2Int, Cell>();
+
+        //Cell c1 = new Cell(new Vector2Int(0, 0), 0, 5);
+        //Cell c2 = new Cell(new Vector2Int(0, 0), 1, 6);
+        //Cell c3 = new Cell(new Vector2Int(0, 0), 2, 7);
+        //Cell c4 = new Cell(new Vector2Int(0, 0), 3, 8);
+        //Cell c5 = new Cell(new Vector2Int(0, 0), 4, 9);
+
+        
+
+        //aStarGrid.Add(c1);
+
+        //foreach(KeyValuePair<Vector2Int, Cell> pair in aStarGrid)
+        //{
+        //    print(pair.Key);
+        //    pair.Value.PrintCell();
+        //}
     }
 }

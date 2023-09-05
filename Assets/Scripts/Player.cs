@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Calculation;
+
 public class Player : MonoBehaviour
 {
     private Grid grid;
@@ -9,12 +11,25 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        grid = GameObject.Find("Grid").GetComponent<Grid>();
-        currentPos = grid.WorldToCell(transform.position);
+        InitVariables();
     }
 
     private void Update()
     {
+        GetCurrentPosition();
+    }
 
+    private void InitVariables()
+    {
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
+    }
+
+    public Vector2Int GetCurrentPosition()
+    {
+        currentPos = grid.WorldToCell(transform.position);
+
+        //print(Calc.Vector3to2Int(currentPos));
+
+        return Calc.Vector3to2Int(currentPos);
     }
 }

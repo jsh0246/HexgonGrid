@@ -1,138 +1,103 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
-public class Cell
-{
-    public Vector2Int pos;
-    public float f, g, h;
-
-    public Cell(Vector2Int pos, float g, float h)
-    {
-        this.pos = pos;
-        this.g = g;
-        this.h = h;
-
-        this.f = g + h;
-    }
-}
-
-public class Cell
-{
-    private int f, g, h;
-
-    public Cell(int g, int h)
-    {
-        this.f = g + h;
-        this.g = g;
-        this.h = h;
-    }
-}
+using Calculation;
+using Unity.VisualScripting;
 
 public class Pathfinding : MonoBehaviour
 {
-<<<<<<< HEAD
     private Grid grid;
     private Player player;
     private Vector2Int goal;
-
-    private float f, g, n;
-    private List<Vector2Int> openList, closedList;
-
-    private void Start()
-    {
-        player = GetComponent<Player>();
-        grid = GameObject.Find("Grid").GetComponent<Grid>();
-
-        openList = new List<Vector2Int>();
-        closedList = new List<Vector2Int>();
-=======
-    [SerializeField] private Grid grid;
-
     private List<Cell> openList, closedList;
 
     private void Start()
     {
-        openList = new List<Cell>();
-        closedList = new List<Cell>();
->>>>>>> 805693b00fcac335af3ad5b4b2b8d8747b79d335
+        InitVariables();
     }
 
     private void Update()
     {
-<<<<<<< HEAD
-        SetGoal();
-
         AStar();
     }
 
-    private void SetGoal()
-=======
-        MousePositionToGridCoordinate();
-    }
-
-    // 클랙했을 때 해당 좌표를 가져온다
-    private Vector3Int MousePositionToGridCoordinate()
+    private void InitVariables()
     {
-        Vector3Int pos = Vector3Int.zero;
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
+        player = GetComponent<Player>();
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            pos = grid.WorldToCell(mouseWorldPos);
-
-            print(pos);
-        }
-
-        return pos;
-    }
-
-    // A* Algorithm
-    private void AStar()
->>>>>>> 805693b00fcac335af3ad5b4b2b8d8747b79d335
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
-            Vector2Int goal = Vector3to2Int(grid.WorldToCell(worldPoint));
-            
-
-            print(goal);
-
-            //tilemap.SetTile(position, tilebase);
-        }
+        openList = new List<Cell>();
+        closedList = new List<Cell>();
     }
 
     private void AStar()
     {
-        Vector2Int pos = new Vector2Int(player.currentPos.x, player.currentPos.z);
-        float g = 0;
-        float h = ManhattenDistance(pos, goal);
-
-        Cell start = new Cell(pos, g, h);
-
-        while (true)
+        if (Input.GetMouseButtonDown(1))
         {
-            
-
-     
+            SetAStarGoal();
+            AStarTraverse();
         }
     }
 
-    private Vector2Int Vector3to2Int(Vector3Int v)
+    // 우클릭했을 때 해당 좌표를 가져온다
+    // 함수 원리 잘 이해 못함 ray.GetPoint? ray.origin.y?
+    private void SetAStarGoal()
     {
-        return new Vector2Int(v.x, v.z);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
+        goal = Calc.Vector3to2Int(grid.WorldToCell(worldPoint));
+
+        //print("Vefore : " + grid.WorldToCell(worldPoint));
+        print("GOAL POSITION : " + goal);
     }
 
-    private int ManhattenDistance(Vector2Int s, Vector2Int t)
+    private void AStarTraverse()
     {
-        return Mathf.Abs(s.x - t.x) + Mathf.Abs(s.y - t.y);
+        // 현재 플레이어의 위치
+        Vector2Int startPos = player.GetCurrentPosition();
+        float startG = 0;
+        float startH = Calc.ManhattenDistance(startPos, goal);
+
+        AStarGrid aStarGrid = new AStarGrid();
+
+        aStarGrid.aStarGrid.Add(startPos, new Cell(startG, startH));
+
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (startPos.x == i && startPos.y == j)
+                    continue;
+
+                Vector2Int candidate = new Vector2Int(startPos.x + i, startPos.y + j);
+
+                float g = Calc.ManhattenDistance(startPos, candidate);
+                float h = Calc.ManhattenDistance(candidate, goal);
+
+
+                aStarGrid.aStarGrid.Add(candidate, new Cell(g, h));
+            }
+        }
+
+
+
+        foreach (KeyValuePair<Vector2Int, Cell> keyValuePair in aStarGrid.aStarGrid)
+        {
+            print(keyValuePair.Key);
+            print(keyValuePair.Value.PrintCell());
+        }
+
+
+
+        //print(aStarGrid.aStarGrid.Count);
+
+        //while (true)
+        //{
+
+
+
+        //}
     }
-
-
 }
