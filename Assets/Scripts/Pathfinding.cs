@@ -1,12 +1,12 @@
+using Calculation;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Calculation;
-using System.Linq;
 using System;
+using System.Linq;
 
-public class ByCellFValue : IComparer<Vector2Int>
+public class ByCellFValue : IComparer<Cell>
 {
 
     //public bool Compare(Vector2Int x, Vector2Int y)
@@ -21,19 +21,23 @@ public class ByCellFValue : IComparer<Vector2Int>
     //    else return 0;
     //}
 
-    public int Compare(Vector2Int x, Vector2Int y)
+    public int Compare(Cell x, Cell y)
     {
-        if (AStarGrid.aStarGrid[x].f == AStarGrid.aStarGrid[y].f)
+        if (x.f == y.f)
         {
-            if (x == y) return 0;
+            if (x.pos == y.pos)
+                return 0;
+            else if (x.pos.x < y.pos.x)
+                return 1;
+            else
+                return -1;
         }
-
-        if (AStarGrid.aStarGrid[x].f < AStarGrid.aStarGrid[y].f)
+        else if (x.f < y.f)
             return -1;
-        else if (AStarGrid.aStarGrid[x].f > AStarGrid.aStarGrid[y].f)
-            return 1;
         else
-            return 0;
+            return 1;
+
+
 
 
 
@@ -54,30 +58,83 @@ public class FValueComparer : IComparer<Vector2Int>
 {
     public int Compare(Vector2Int x, Vector2Int y)
     {
+        if (AStarGrid.aStarGrid[x].f == AStarGrid.aStarGrid[y].f)
+        {
+            if (x == y)
+                return 0;
+            else if (x.x < y.x)
+                return 1;
+            else
+                return -1;
+        }
+        else if (AStarGrid.aStarGrid[x].f < AStarGrid.aStarGrid[y].f)
+            return -1;
+        else
+            return 1;
+
+
         //if(AStarGrid.aStarGrid[x].f == AStarGrid.aStarGrid[y].f)
         //{
         //    if (x.x == y.x && x.y == y.y) return 0;
         //}
 
-        if (x.x == y.x && x.y == y.y) return 0;
-        //if (x == y) return 0;
+        //if (x.Equals(y))
+        //    return 0;
 
-        if (AStarGrid.aStarGrid[x].f < AStarGrid.aStarGrid[y].f)
-            return -1;
-        else if (AStarGrid.aStarGrid[x].f > AStarGrid.aStarGrid[y].f)
-            return 1;
-        else return 1;
+
+        //if (x.x == y.x && x.y == y.y)
+        //{
+        //    return 0;
+        //}
+        ////if (x == y) return 0;
+
+        //var result = AStarGrid.aStarGrid[x].f.CompareTo(AStarGrid.aStarGrid[y].f);
+
+        //if(result == 0)
+        //{
+        //    if (x == y) return 0;
+        //    else if (result > 0)
+        //        return 1;
+        //    else
+        //        return -1;
+        //}
+
+        //return result;
+
+        //if (AStarGrid.aStarGrid[x].f.CompareTo(AStarGrid.aStarGrid[y].f) < 0)
+        //    return -1;
+        //else if (AStarGrid.aStarGrid[x].f.CompareTo(AStarGrid.aStarGrid[y].f) > 0)
+        //    return 1;
+        //else return 1;
+    }
+}
+
+public class EQ : IEqualityComparer<Cell>
+{
+    public bool Equals(Cell x, Cell y)
+    {
+        if (x.pos == y.pos) return true;
+        else return false;
+    }
+
+    public int GetHashCode(Cell obj)
+    {
+        return obj.pos.GetHashCode();
     }
 }
 
 public class Pathfinding : MonoBehaviour
 {
+    public Cell goalCell;
+
     private Grid grid;
     private Player player;
     private Vector2Int start, goal;
     //private SortedSet<Vector2Int> openList;
-    private SortedDictionary<Vector2Int, float> openList;
-    private HashSet<Vector2Int> closedList;
+    //private SortedDictionary<Vector2Int, float> openList;
+    private HashSet<Cell> openList;
+    private HashSet<Cell> closedList;
+    //private Dictionary<Vector2Int, Cell> aStarGrid;
 
 
     //private SortedList<Vector2Int, int> 
@@ -94,13 +151,17 @@ public class Pathfinding : MonoBehaviour
 
     private void InitVariables()
     {
+        goalCell = null;
+
         grid = GameObject.Find("Grid").GetComponent<Grid>();
         player = GetComponent<Player>();
 
-        openList = new SortedDictionary<Vector2Int, float>(new FValueComparer());
-        //openList = new SortedSet<Vector2Int>();
-        closedList = new HashSet<Vector2Int>();
+        //openList = new SortedDictionary<Vector2Int, float>(new FValueComparer());
+        openList = new HashSet<Cell>(new EQ());
+        //openList = new SortedSet<Cell>(new ByCellFValue());
+        closedList = new HashSet<Cell>(new EQ());
         //aStarGrid = new Dictionary<Vector2Int, Cell>();
+        //aStarGrid = new HashSet<Cell>();
     }
 
     private void AStar()
@@ -113,10 +174,14 @@ public class Pathfinding : MonoBehaviour
             float g = 0;
             float h = Calc.ManhattenDistance(start, goal);
 
-            AStarGrid.aStarGrid.Add(start, new Cell(g, h));
-            openList.Add(start, g+h);
+            //AStarGrid.aStarGrid.Add(start, new Cell(g, h));
+            //openList.Add(start, g+h);
+            //aStarGrid.Add(new Cell(start, g, h));
 
-            AStarTraverse(start);
+            Cell c = new Cell(start, g, h);
+            openList.Add(c);
+
+            AStarTraverse(c);
         }
     }
 
@@ -130,11 +195,12 @@ public class Pathfinding : MonoBehaviour
         goal = Calc.Vector3to2Int(grid.WorldToCell(worldPoint));
 
         //print("Vefore : " + grid.WorldToCell(worldPoint));
-        //print("GOAL POSITION : " + goal);
+        print("GOAL POSITION : " + goal);
     }
 
-    private void AStarTraverse(Vector2Int pos)
+    private void AStarTraverse(Cell c)
     {
+        openList.Remove(c);
         // 현재 플레이어의 위치
         //Vector2Int startPos = player.GetCurrentPosition();
 
@@ -148,18 +214,48 @@ public class Pathfinding : MonoBehaviour
         {
             for (int j = -1; j <= 1; j++)
             {
+                float gIncrement = 1f;
+                if (Mathf.Abs(i) + Mathf.Abs(j) == 2) {
+                    gIncrement += 0.4f;
+                    //continue;
+                }
+
                 if (i == 0 && j == 0)
                     continue;
 
-                Vector2Int adjacentPos = new Vector2Int(pos.x + i, pos.y + j);
+                Vector2Int adjacentPos = new Vector2Int(c.pos.x + i, c.pos.y + j);
 
-                float _g = Calc.ManhattenDistance(start, adjacentPos);
+                float _g = c.g + gIncrement; 
+                //float _g = Calc.ManhattenDistance(start, adjacentPos);
                 float _h = Calc.ManhattenDistance(adjacentPos, goal);
 
                 try
                 {
-                    AStarGrid.aStarGrid.Add(adjacentPos, new Cell(_g, _h));
-                    openList.Add(adjacentPos, _g+_h);
+                    //AStarGrid.aStarGrid.Add(adjacentPos, new Cell(_g, _h));
+                    Cell _c = new Cell(adjacentPos, _g, _h);
+
+                    if (!closedList.Contains(_c))
+                    {
+                        if (openList.Contains(_c))
+                        {
+                            print("UPDATE");
+                            foreach (Cell cell in openList)
+                            {
+                                if(_c.f < cell.f)
+                                {
+                                    
+                                    cell.UpdateValues(_g, _h);
+                                }
+                            }
+                        } else
+                        {
+                            openList.Add(_c);
+                        }
+                    }
+                    else
+                    {
+
+                    }
                 }
                 catch (Exception e)
                 {
@@ -168,40 +264,72 @@ public class Pathfinding : MonoBehaviour
             }
         }
 
+
         //foreach (var v in openList)
         //    print(v);
 
         // 시작점은 OpenList에서 제거 후 ClosedList로
-        print(openList.Count);
-        print(openList.Remove(pos));
-        print(openList.Count);
+
+        //foreach (var v in openList)
+        //    print(v.PrintCell());
+
+        
+        closedList.Add(c);
+
+        //openList.Remove(c);
+        //closedList.Add(c);
 
 
-        closedList.Add(pos);
+
+
+        //foreach (var v in openList)
+        //    print(v.PrintCell());
+
+
+
 
         // OpenList의 최소값 하나 선택
         //print(openList.ElementAt(0));
 
-        
+        openList = openList.OrderBy(x => x.f).ToHashSet();
+        var next = openList.ElementAt(0);
+        next.prevCell = c;
+        //foreach (var v in openList)
+        //    print(v.PrintCell());
+
         //foreach (var v in openList)
         //    print(v);
+        //cnt++;
+        //if (cnt == 20)
+        //{
+        //    //print("========================");
+        //    //foreach (var v in openList)
+        //    //    print(v.PrintCell());
+        //    return;
+        //}
 
+        
+        print(next.PrintCell());
+        //print(openList.Count);
+        //print("ClosedSet : " + closedList.Count);
 
         //var sortedDict = openList.OrderBy(x => x.Value.f).ToList();
         //var next = sortedDict[0];
 
-        // 해당 좌표가 Goal이면 종료, 아니면 계속 진행
-        //if(next.Key == goal)
-        //{
-        //    print("Arrived");
-        //    return;
-        //} else
-        //{
-        //    // 현재점을 시작으로 Loop
-        //    AStarTraverse(sortedDict[0].Key);
-        //}
+        //해당 좌표가 Goal이면 종료, 아니면 계속 진행
+        if (next.pos == goal)
+        {
+            print("Arrived");
+            goalCell = next;
+            return;
+        }
+        else
+        {
+            // 현재점을 시작으로 Loop
+            AStarTraverse(next);
+        }
 
-        
+
 
 
 

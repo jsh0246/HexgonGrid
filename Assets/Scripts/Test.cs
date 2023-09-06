@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,7 +11,9 @@ public class Test : MonoBehaviour
     {
         //Test1();
         //Test2();
-        Test3();
+        //Test3();
+        //Test4();
+        Test5();
     }
 
     private void Test1()
@@ -103,10 +106,67 @@ public class Test : MonoBehaviour
         try
         {
             dict.Add(0, "Á¤»óÄ¡");
-        } catch(ArgumentException e)
+        }
+        catch (ArgumentException e)
         {
             print("do sth");
             print(e);
+        }
+    }
+
+    private void Test4()
+    {
+        Vector2Int v1 = new Vector2Int() { x = 1, y = 2 };
+        Vector2Int v2 = new Vector2Int() { x = 1, y = 3 };
+
+        print(v1 == v2);
+        print(v1.Equals(v2));
+        print(v1.x == v2.x && v1.y == v2.y);
+        print(5.21.CompareTo(5.20));
+    }
+
+    private void Test5()
+    {
+        Cell c1 = new Cell(Vector2Int.one, 1, 2);
+        Cell c2 = new Cell(Vector2Int.one, 1, 2);
+
+        print(c1.Equals(c2));
+
+        HashSet<Cell> set = new HashSet<Cell>(new EQ());
+        //HashSet<Cell> set = new HashSet<Cell>();
+
+        set.Add(c1);
+        set.Add(c2);
+
+        print(set.Count);
+
+        HashSet<string> stringSet = new HashSet<string>();
+
+        string s1 = "AAA";
+        string s2 = "AAA";
+
+        print(s1.Equals(s2));
+
+        stringSet.Add(s1);
+        stringSet.Add(s2);
+
+        print(stringSet.Count);
+    }
+
+    public class EQ : IEqualityComparer<Cell>
+    {
+        public bool Equals(Cell x, Cell y)
+        {
+            if (x.pos == y.pos) return true;
+            else return false;
+        }
+
+        public int GetHashCode(Cell obj)
+        {
+            return obj.f.GetHashCode();
+            //return obj.pos.GetHashCode();
+            //return obj.GetHashCode();
+            //return (int)obj.f;
         }
     }
 }

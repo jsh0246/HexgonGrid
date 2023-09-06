@@ -4,11 +4,30 @@ using UnityEngine;
 
 public class Cell
 {
-    //public Vector2Int pos;
+    public Vector2Int pos;
     public float f { get; private set; }
-    private float g, h;
+    public float g { get; private set; }
+    public float h { get; private set; }
+    public Cell prevCell { get; set; }
 
-    public Cell(float g, float h)
+    //public Cell(float g, float h)
+    //{
+    //    this.g = g;
+    //    this.h = h;
+
+    //    this.f = g + h;
+    //}
+
+    public Cell(Vector2Int pos, float g, float h)
+    {
+        this.pos = pos;
+        this.g = g;
+        this.h = h;
+
+        this.f = g + h;
+    }
+
+    public void UpdateValues(float g, float h)
     {
         this.g = g;
         this.h = h;
@@ -16,18 +35,10 @@ public class Cell
         this.f = g + h;
     }
 
-    //public Cell(Vector2Int pos, float g, float h)
-    //{
-    //    this.pos = pos;
-    //    this.g = g;
-    //    this.h = h;
-
-    //    this.f = g + h;
-    //}
-
     public string PrintCell()
     {
         //print("Cell Position : " + pos);
-        return "f : " + f + ", g : " + g + ", h : " + h;
+        //return "f : " + f + ", g : " + g + ", h : " + h;
+        return "(" + pos.x + ", " + pos.y + ") / f : " + f + ", g : " + g + ", h : " + h;
     }
 }

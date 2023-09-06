@@ -5,51 +5,71 @@ using UnityEngine.Tilemaps;
 
 public class MovingController : MonoBehaviour
 {
-    public Tilemap map;
-
+    [SerializeField]
     private Grid grid;
 
+    private Pathfinding pf;
+    private List<Cell> path;
+
+    private Vector2Int startPos, goalPos;
+    private float timeToMove = 1f;
+    private bool moveAllowed;
 
     private void Start()
     {
-        grid = gameObject.GetComponent<Grid>();
+        InitVariables();
+        MakePath();
     }
 
     private void Update()
     {
-        //PlayerInput();
-
-        Click();
-    }
-
-    private void PlayerInput()
-    {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (path.Count > 1 && !moveAllowed)
         {
-            transform.position += Vector3.right * 0.5f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            transform.position += Vector3.left * 0.5f;
+            StartCoroutine(MoveOneCellCor());
         }
     }
 
-    private void MoveMove()
+    private void InitVariables()
     {
-        transform.position += new Vector3(0.5f, 0, 0);
+        pf = GetComponent<Pathfinding>();
+        path = new List<Cell>();
 
+        moveAllowed = false;
     }
 
-    private void Click()
+    private void MakePath()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int pos = grid.WorldToCell(mouseWorldPos);
+        Cell cell = pf.goalCell;
 
-            print(mouseWorldPos);
-            print(pos);
+        while(cell != null)
+        {
+            path.Add(cell);
+            cell = cell.prevCell;
         }
+
+        path.Reverse();
+    }
+
+    private IEnumerator MoveOneCellCor()
+    {
+        moveAllowed = true;
+
+        float elaspedTime = 0f;
+
+        startPos = path[0].pos;
+        goalPos = path[1].pos;
+        while (elaspedTime < timeToMove) {
+            Vector2 v = Vector2.Lerp(startPos, goalPos, (elaspedTime / timeToMove));
+            v *= grid.cellSize;
+
+            transform.position = new Vector3(v.x, transform.position.y, v.y);
+
+            elaspedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        path.RemoveAt(0);
+        moveAllowed = false;
     }
 }
