@@ -6,109 +6,6 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class ByCellFValue : IComparer<Cell>
-{
-
-    //public bool Compare(Vector2Int x, Vector2Int y)
-    //{
-    //    return AStarGrid.aStarGrid[x].f < AStarGrid.aStarGrid[y].f;
-    //}
-
-    //int IComparer<Vector2Int>.Compare(Vector2Int x, Vector2Int y)
-    //{
-    //    if (AStarGrid.aStarGrid[x].f < AStarGrid.aStarGrid[y].f) return -1;
-    //    else if (AStarGrid.aStarGrid[x].f > AStarGrid.aStarGrid[y].f) return 1;
-    //    else return 0;
-    //}
-
-    public int Compare(Cell x, Cell y)
-    {
-        if (x.f == y.f)
-        {
-            if (x.pos == y.pos)
-                return 0;
-            else if (x.pos.x < y.pos.x)
-                return 1;
-            else
-                return -1;
-        }
-        else if (x.f < y.f)
-            return -1;
-        else
-            return 1;
-
-
-
-
-
-
-
-        //else if(AStarGrid.aStarGrid[x].f > AStarGrid.aStarGrid[y].f) return 1;
-
-        //if (AStarGrid.aStarGrid[x].f < AStarGrid.aStarGrid[y].f) return -1;
-        //else if (AStarGrid.aStarGrid[x].f > AStarGrid.aStarGrid[y].f) return 1;
-        //else return 0;
-
-        //if (AStarGrid.aStarGrid[x].f <= AStarGrid.aStarGrid[y].f) return -1;
-        //else return 1;
-    }
-}
-
-public class FValueComparer : IComparer<Vector2Int>
-{
-    public int Compare(Vector2Int x, Vector2Int y)
-    {
-        if (AStarGrid.aStarGrid[x].f == AStarGrid.aStarGrid[y].f)
-        {
-            if (x == y)
-                return 0;
-            else if (x.x < y.x)
-                return 1;
-            else
-                return -1;
-        }
-        else if (AStarGrid.aStarGrid[x].f < AStarGrid.aStarGrid[y].f)
-            return -1;
-        else
-            return 1;
-
-
-        //if(AStarGrid.aStarGrid[x].f == AStarGrid.aStarGrid[y].f)
-        //{
-        //    if (x.x == y.x && x.y == y.y) return 0;
-        //}
-
-        //if (x.Equals(y))
-        //    return 0;
-
-
-        //if (x.x == y.x && x.y == y.y)
-        //{
-        //    return 0;
-        //}
-        ////if (x == y) return 0;
-
-        //var result = AStarGrid.aStarGrid[x].f.CompareTo(AStarGrid.aStarGrid[y].f);
-
-        //if(result == 0)
-        //{
-        //    if (x == y) return 0;
-        //    else if (result > 0)
-        //        return 1;
-        //    else
-        //        return -1;
-        //}
-
-        //return result;
-
-        //if (AStarGrid.aStarGrid[x].f.CompareTo(AStarGrid.aStarGrid[y].f) < 0)
-        //    return -1;
-        //else if (AStarGrid.aStarGrid[x].f.CompareTo(AStarGrid.aStarGrid[y].f) > 0)
-        //    return 1;
-        //else return 1;
-    }
-}
-
 public class EQ : IEqualityComparer<Cell>
 {
     public bool Equals(Cell x, Cell y)
@@ -146,6 +43,7 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
+        LeftClickGivesMousePosition();
         AStar();
     }
 
@@ -164,6 +62,20 @@ public class Pathfinding : MonoBehaviour
         //aStarGrid = new HashSet<Cell>();
     }
 
+    private void LeftClickGivesMousePosition()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
+            Vector2Int moousePoint = Calc.Vector3to2Int(grid.WorldToCell(worldPoint));
+
+            //print("Vefore : " + grid.WorldToCell(worldPoint));
+            print("MOUSE POSITION : " + moousePoint);
+        }
+    }
+
     private void AStar()
     {
         if (Input.GetMouseButtonDown(1))
@@ -180,6 +92,8 @@ public class Pathfinding : MonoBehaviour
 
             Cell c = new Cell(start, g, h);
             openList.Add(c);
+
+            print("START POSITION : " + start);
 
             AStarTraverse(c);
         }
@@ -200,6 +114,7 @@ public class Pathfinding : MonoBehaviour
 
     private void AStarTraverse(Cell c)
     {
+        print("씨발머랑께 : " + c.PrintCell());
         openList.Remove(c);
         // 현재 플레이어의 위치
         //Vector2Int startPos = player.GetCurrentPosition();
@@ -243,7 +158,6 @@ public class Pathfinding : MonoBehaviour
                             {
                                 if(_c.f < cell.f)
                                 {
-                                    
                                     cell.UpdateValues(_g, _h);
                                 }
                             }
@@ -321,6 +235,7 @@ public class Pathfinding : MonoBehaviour
         {
             print("Arrived");
             goalCell = next;
+
             return;
         }
         else
