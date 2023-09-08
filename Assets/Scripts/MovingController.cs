@@ -18,18 +18,26 @@ public class MovingController : MonoBehaviour
 
     private int cnt;
 
-    private Vector3 start, goal;
+    private Vector3Int start, goal;
+    private Vector3 vStart, vGoal;
 
     private void Start()
     {
         InitVariables();
         MakePath();
 
-        goal = Calculation.Calc.Vector2to3Int(path[cnt].pos, transform.position.y);
-        goal.x *= grid.cellSize.x;
-        goal.z *= grid.cellSize.y;
+        //goal = Calculation.Calc.Vector2to3Int(path[cnt].pos, transform.position.y);
+        goal = new Vector3Int(path[cnt].pos.x, path[cnt].pos.y, 0);
+
+
+        //goal.x *= grid.cellSize.x;
+        //goal.z *= grid.cellSize.y;
+        
+        vGoal = grid.CellToWorld(goal);
+        vGoal += (Vector3.right + Vector3.up * 2 + Vector3.forward);
 
         print(cnt + " : " + goal);
+        print(cnt + " vGoal : " + vGoal);
     }
 
     private void Update()
@@ -103,8 +111,8 @@ public class MovingController : MonoBehaviour
 
     private void MV()
     {
-        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 5f);
-        if (transform.position == goal)
+        transform.position = Vector3.MoveTowards(transform.position, vGoal, Time.deltaTime * 5f);
+        if (transform.position == vGoal)
         {
             if (cnt == path.Count)
             {
@@ -113,12 +121,19 @@ public class MovingController : MonoBehaviour
                 return;
             }
 
-            cnt++;
-            goal = Calculation.Calc.Vector2to3Int(path[cnt].pos, transform.position.y);
-            goal.x *= grid.cellSize.x;
-            goal.z *= grid.cellSize.y;
+            
+            //goal = Calculation.Calc.Vector2to3Int(path[cnt].pos, transform.position.y);
+            goal = new Vector3Int(path[cnt].pos.x, path[cnt].pos.y, 0);
 
+
+            //goal.x *= grid.cellSize.x;
+            //goal.z *= grid.cellSize.y;
+            vGoal = grid.CellToWorld(goal);
+            vGoal += (Vector3.right + Vector3.up * 2 + Vector3.forward);
+
+            cnt++;
             print(cnt + " : " + goal);
+            print(cnt+ " vGoal : " + vGoal);
         }
     }
 }

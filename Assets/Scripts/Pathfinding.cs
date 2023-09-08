@@ -71,6 +71,8 @@ public class Pathfinding : MonoBehaviour
             Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
             Vector2Int moousePoint = Calc.Vector3to2Int(grid.WorldToCell(worldPoint));
 
+            
+
             //print("Vefore : " + grid.WorldToCell(worldPoint));
             print("MOUSE POSITION : " + moousePoint);
         }
@@ -114,7 +116,13 @@ public class Pathfinding : MonoBehaviour
 
     private void AStarTraverse(Cell c)
     {
-        print("씨발머랑께 : " + c.PrintCell());
+        if(c.pos == goal)
+        {
+            print("gotcha");
+            return;
+        }
+
+        print("싸우스이스트 : " + c.PrintCell());
         openList.Remove(c);
         // 현재 플레이어의 위치
         //Vector2Int startPos = player.GetCurrentPosition();
