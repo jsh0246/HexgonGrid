@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,10 +18,18 @@ public class MovingController : MonoBehaviour
 
     private int cnt;
 
+    private Vector3 start, goal;
+
     private void Start()
     {
         InitVariables();
         MakePath();
+
+        goal = Calculation.Calc.Vector2to3Int(path[cnt].pos, transform.position.y);
+        goal.x *= grid.cellSize.x;
+        goal.z *= grid.cellSize.y;
+
+        print(cnt + " : " + goal);
     }
 
     private void Update()
@@ -29,18 +38,10 @@ public class MovingController : MonoBehaviour
         //{
         //    StartCoroutine(MoveOneCellCor());
         //}
-
-        //if(path.Count > 2)
-        //{
-        //    MV();
-        //}
-
-        print("x");
-        print(grid.cellSize.x);
-        print("y");
-        print(grid.cellSize.y);
-        print("z");
-        print(grid.cellSize.z);
+        if (moveAllowed)
+        {
+            MV();
+        }
     }
 
     private void InitVariables()
@@ -49,7 +50,7 @@ public class MovingController : MonoBehaviour
         path = new List<Cell>();
 
         timeToMove = 1f;
-        moveAllowed = false;
+        moveAllowed = true;
 
         cnt = 0;
     }
@@ -102,16 +103,22 @@ public class MovingController : MonoBehaviour
 
     private void MV()
     {
-        Vector3 start = new Vector3(path[0].pos.x * grid.cellSize.x, transform.position.y, path[0].pos.y * grid.cellSize.z);
-        Vector3 goal = new Vector3(path[1].pos.x * grid.cellSize.x, transform.position.y, path[1].pos.y * grid.cellSize.z);
+        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime * 5f);
+        if (transform.position == goal)
+        {
+            if (cnt == path.Count)
+            {
+                print("µµÂø");
+                moveAllowed = false;
+                return;
+            }
 
-        start *= 2f;
-        goal *= 2f;
+            cnt++;
+            goal = Calculation.Calc.Vector2to3Int(path[cnt].pos, transform.position.y);
+            goal.x *= grid.cellSize.x;
+            goal.z *= grid.cellSize.y;
 
-        print("start goal");
-        print(start);
-        print(goal);
-
-        transform.position = Vector3.MoveTowards(start, goal, 5 * Time.deltaTime);
+            print(cnt + " : " + goal);
+        }
     }
 }

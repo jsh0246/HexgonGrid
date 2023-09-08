@@ -13,7 +13,13 @@ public class Test : MonoBehaviour
         //Test2();
         //Test3();
         //Test4();
-        Test5();
+        //Test5();
+        Test7();
+    }
+
+    private void Update()
+    {
+        //Test6();
     }
 
     private void Test1()
@@ -168,5 +174,22 @@ public class Test : MonoBehaviour
             //return obj.GetHashCode();
             //return (int)obj.f;
         }
+    }
+
+    private void Test6()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right * 5, Time.deltaTime);
+    }
+
+    private void Test7()
+    {
+        Vector3 v = new Vector3(1, 7, -4);
+
+        print(v);
+
+        Vector3 mul = new Vector3(2, 3, -4);
+
+        print(Vector3.Scale(v, mul));
+
     }
 }
