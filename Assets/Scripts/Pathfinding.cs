@@ -41,7 +41,7 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
-        LeftClickGivesMousePosition();
+        //LeftClickGivesMousePosition();
         AStar();
     }
 
@@ -60,15 +60,15 @@ public class Pathfinding : MonoBehaviour
 
     private void LeftClickGivesMousePosition()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        //    Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
-        //    Vector2Int moousePoint = Calc.Vector3to2Int(grid.WorldToCell(worldPoint));
+            Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
+            Vector2Int moousePoint = Calc.Vector3to2Int(grid.WorldToCell(worldPoint));
 
-        //    print("MOUSE POSITION : " + moousePoint);
-        //}
+            print("MOUSE POSITION : " + moousePoint);
+        }
     }
 
     private void AStar()

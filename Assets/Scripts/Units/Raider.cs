@@ -1,3 +1,4 @@
+using Calculation;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class Raider : Object, ICharacter
 {
 
-
+    private Grid grid;
     private MovingController mv;
     private Animator anim;
 
@@ -33,6 +34,15 @@ public class Raider : Object, ICharacter
         {
             anim.SetBool("isWalk", true);
         }
+    }
+
+    public Vector2Int GetCurrentPosition()
+    {
+        currentPos = grid.WorldToCell(transform.position);
+
+        //print(Calc.Vector3to2Int(currentPos));
+
+        return Calc.Vector3to2Int(currentPos);
     }
 
     public void Attack()

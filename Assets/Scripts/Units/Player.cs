@@ -8,7 +8,6 @@ public class Player : Object, ICharacter
 {
     [SerializeField]
     private Grid grid;
-    public Vector3Int currentPos { get; private set; }
 
     private void Start()
     {

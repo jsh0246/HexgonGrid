@@ -5,4 +5,5 @@ using UnityEngine;
 public class Object : MonoBehaviour
 {
     private float hp;
+    protected Vector3Int currentPos { get;  set; }
 }
