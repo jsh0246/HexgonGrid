@@ -31,6 +31,8 @@ public class Pathfinding : MonoBehaviour
     private HashSet<Cell> openList;
     private HashSet<Cell> closedList;
 
+    
+
     // 이렇게 서로 pathfinding과 movecontroller가 변수를 handshake하고 있는것이 올바른가?
     // 중간에 정거장같은 manager를 둬야하나?
     MovingController mvctrl;
@@ -68,7 +70,7 @@ public class Pathfinding : MonoBehaviour
             Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
             Vector2Int moousePoint = Calc.Vector3to2Int(GlobalGrid.Instance.Grid.WorldToCell(worldPoint));
 
-            print("MOUSE POSITION : " + moousePoint);
+            //print("MOUSE POSITION : " + moousePoint);
         }
     }
 
@@ -78,37 +80,46 @@ public class Pathfinding : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(1))
             {
-                SetAStarGoal();
+                if (SetAStarGoal()){
 
-                //start = player.GetCurrentPosition();
-                start = unit.GetCurrentPosition();
-                float g = 0;
-                float h = Calc.ManhattenDistance(start, goal);
+                    float g = 0;
+                    float h = Calc.ManhattenDistance(start, goal);
 
-                Cell c = new Cell(start, g, h);
-                openList.Add(c);
+                    Cell c = new Cell(start, g, h);
+                    openList.Add(c);
 
-                print("START POSITION : " + start);
+                    //print("START POSITION : " + start);
 
-                AStarTraverse(c);
+                    AStarTraverse(c);
 
-                mvctrl.moveAllowed = true;
-                mvctrl.moveSetting = true;
+                    mvctrl.moveAllowed = true;
+                    mvctrl.moveSetting = true;
+                }
             }
         }
     }
 
     // 우클릭했을 때 해당 좌표를 가져온다
     // 함수 원리 잘 이해 못함 ray.GetPoint? ray.origin.y?
-    private void SetAStarGoal()
+    private bool SetAStarGoal()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
+
+        start = unit.GetCurrentPosition();
         goal = Calc.Vector3to2Int(GlobalGrid.Instance.Grid.WorldToCell(worldPoint));
 
-        //print("Vefore : " + grid.WorldToCell(worldPoint));
-        print("GOAL POSITION : " + goal);
+        //print("GOAL POSITION : " + goal);
+
+        if (Calc.ManhattenDistance(start, goal) <= unit.moveRange)
+        {
+            return true;
+        }
+        else
+            return false;
+
+
     }
 
     private void AStarTraverse(Cell c)
@@ -116,6 +127,12 @@ public class Pathfinding : MonoBehaviour
         if(c.pos == goal)
         {
             print("gotcha");
+
+            goalCell = c;
+
+            openList.Clear();
+            closedList.Clear();
+
             return;
         }
 
@@ -150,7 +167,7 @@ public class Pathfinding : MonoBehaviour
                     {
                         if (openList.Contains(_c))
                         {
-                            print("UPDATE");
+                            //print("UPDATE");
                             foreach (Cell cell in openList)
                             {
                                 if(_c.f < cell.f)
@@ -186,7 +203,7 @@ public class Pathfinding : MonoBehaviour
         //해당 좌표가 Goal이면 종료, 아니면 계속 진행
         if (next.pos == goal)
         {
-            print("Arrived");
+            //print("Arrived");
             goalCell = next;
 
             openList.Clear();

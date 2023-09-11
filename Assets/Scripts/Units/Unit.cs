@@ -6,15 +6,21 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public bool isSelected { get; set; }
+    public int moveRange { get; protected set; }
 
     protected Vector3Int currentPos { get; set; }
-
     protected float maxHp, currentHp;
-    public int moveRange { get; protected set; }
+    [SerializeField]
+    private RectTransform popupMenu;
     
     protected virtual void Start()
     {
         InitVariables();
+    }
+
+    protected virtual void Update()
+    {
+        PopupMenu();
     }
 
     private void InitVariables()
@@ -39,5 +45,23 @@ public class Unit : MonoBehaviour
     public virtual void DrawMoveRange()
     {
 
+    }
+
+    private void PopupMenu()
+    {
+        if (Input.GetMouseButton(2) && isSelected)
+        {
+            Vector3 popupPos = Camera.main.WorldToScreenPoint(transform.position);
+            popupMenu.anchoredPosition = popupPos;
+        }
+
+        if(Input.GetMouseButtonDown(0) && isSelected)
+        {
+            popupMenu.anchoredPosition = Vector3.down * 2000;
+        }
+
+        // 게임형식을 좀 갖추고 세부 진행
+        // 파이 맞추기 / 죽으면 뒤에꺼 보이기 / 파이 그림 찾기 / 파이 그림 연속생성 문제 풀어가면서
+        // 
     }
 }

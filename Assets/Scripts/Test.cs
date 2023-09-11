@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TestTools;
 using UnityEngine.UIElements;
 
 public class Test : MonoBehaviour
@@ -14,7 +15,8 @@ public class Test : MonoBehaviour
         //Test3();
         //Test4();
         //Test5();
-        Test7();
+        //Test7();
+        Test8();
     }
 
     private void Update()
@@ -191,5 +193,37 @@ public class Test : MonoBehaviour
 
         print(Vector3.Scale(v, mul));
 
+    }
+
+    private void Test8()
+    {
+        Vector3 curPos = Vector3.zero;
+        List<Vector3> list = new List<Vector3>();
+        int moveRange = 3;
+
+        for (int i = 1; i < moveRange; i++)
+        {
+            for (int j = 1; j <= -i + 3; j++)
+            {
+                //print(i + " " + j);
+                list.Add(curPos + Vector3.right * i + Vector3.forward * j);
+                list.Add(curPos + Vector3.left * i + Vector3.forward * j);
+                list.Add(curPos + Vector3.left * i + Vector3.back * j);
+                list.Add(curPos + Vector3.right * i + Vector3.back * j);
+                //list.Add(Vector3.forward + Vector3.right)
+            }
+        }
+
+        list.Add(curPos);
+        for (int i = 1; i <= moveRange; i++)
+        {
+            list.Add(curPos + Vector3.right * i);
+            list.Add(curPos + Vector3.left * i);
+            list.Add(curPos + Vector3.forward * i);
+            list.Add(curPos + Vector3.back * i);
+        }
+
+        foreach (Vector3 v in list)
+            print(v);
     }
 }

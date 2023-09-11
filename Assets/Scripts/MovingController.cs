@@ -93,7 +93,7 @@ public class MovingController : MonoBehaviour
         {
             if (cnt == path.Count)
             {
-                print("µµÂø");
+                //print("µµÂø");
                 moveAllowed = false;
 
                 path.Clear();
