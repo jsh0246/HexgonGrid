@@ -24,8 +24,9 @@ public class Pathfinding : MonoBehaviour
 {
     public Cell goalCell;
 
-    private Grid grid;
-    private Player player;
+    //private Player player;
+    private Unit unit;
+
     private Vector2Int start, goal;
     private HashSet<Cell> openList;
     private HashSet<Cell> closedList;
@@ -49,8 +50,8 @@ public class Pathfinding : MonoBehaviour
     {
         goalCell = null;
 
-        grid = GameObject.Find("Grid").GetComponent<Grid>();
-        player = GetComponent<Player>();
+        //player = GetComponent<Player>();
+        unit = GetComponent<Unit>();
 
         openList = new HashSet<Cell>(new EQ());
         closedList = new HashSet<Cell>(new EQ());
@@ -65,7 +66,7 @@ public class Pathfinding : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
-            Vector2Int moousePoint = Calc.Vector3to2Int(grid.WorldToCell(worldPoint));
+            Vector2Int moousePoint = Calc.Vector3to2Int(GlobalGrid.Instance.Grid.WorldToCell(worldPoint));
 
             print("MOUSE POSITION : " + moousePoint);
         }
@@ -73,23 +74,27 @@ public class Pathfinding : MonoBehaviour
 
     private void AStar()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (unit.isSelected)
         {
-            SetAStarGoal();
+            if (Input.GetMouseButtonDown(1))
+            {
+                SetAStarGoal();
 
-            start = player.GetCurrentPosition();
-            float g = 0;
-            float h = Calc.ManhattenDistance(start, goal);
+                //start = player.GetCurrentPosition();
+                start = unit.GetCurrentPosition();
+                float g = 0;
+                float h = Calc.ManhattenDistance(start, goal);
 
-            Cell c = new Cell(start, g, h);
-            openList.Add(c);
+                Cell c = new Cell(start, g, h);
+                openList.Add(c);
 
-            print("START POSITION : " + start);
+                print("START POSITION : " + start);
 
-            AStarTraverse(c);
+                AStarTraverse(c);
 
-            mvctrl.moveAllowed = true;
-            mvctrl.moveSetting = true;
+                mvctrl.moveAllowed = true;
+                mvctrl.moveSetting = true;
+            }
         }
     }
 
@@ -100,7 +105,7 @@ public class Pathfinding : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
-        goal = Calc.Vector3to2Int(grid.WorldToCell(worldPoint));
+        goal = Calc.Vector3to2Int(GlobalGrid.Instance.Grid.WorldToCell(worldPoint));
 
         //print("Vefore : " + grid.WorldToCell(worldPoint));
         print("GOAL POSITION : " + goal);

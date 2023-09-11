@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class Highlighter : MonoBehaviour
 {
-    [SerializeField] private Grid grid;
+    private UnitSelector unitSelector;
 
     private RaycastHit hit;
     private Color originalColor;
@@ -25,6 +25,8 @@ public class Highlighter : MonoBehaviour
 
     private void InitVariables()
     {
+        unitSelector = GetComponent<UnitSelector>();
+
         highlighted = false;
     }
 
@@ -38,7 +40,7 @@ public class Highlighter : MonoBehaviour
             {
                 gridObject = hit.collider.gameObject;
                 originalColor = hit.collider.GetComponent<MeshRenderer>().material.color;
-                hit.collider.GetComponent<MeshRenderer>().material.color = Color.cyan;
+                hit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
 
                 highlighted = true;
             }

@@ -4,13 +4,12 @@ using UnityEngine;
 
 using Calculation;
 
-public class Player : Object, ICharacter
+public class Player : Unit, ICharacter
 {
-    [SerializeField]
-    private Grid grid;
-
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         InitVariables();
     }
 
@@ -21,16 +20,7 @@ public class Player : Object, ICharacter
 
     private void InitVariables()
     {
-
-    }
-
-    public Vector2Int GetCurrentPosition()
-    {
-        currentPos = grid.WorldToCell(transform.position);
-
-        //print(Calc.Vector3to2Int(currentPos));
-
-        return Calc.Vector3to2Int(currentPos);
+        name = "Player 1";
     }
 
     /* SKills */

@@ -11,8 +11,7 @@ public class MovingController : MonoBehaviour
     [HideInInspector]
     public bool moveAllowed;
 
-    [SerializeField]
-    private Grid grid;
+    private Unit unit;
 
     private Pathfinding pf;
     private List<Cell> path;
@@ -29,26 +28,36 @@ public class MovingController : MonoBehaviour
 
     private void Update()
     {
-        if (moveAllowed)
-        {
-            if(moveSetting)
-            {
-                MakePath();
-                MoveSettings();
-                moveSetting = false;
-            }
-
-            Move();
-        }
+        MakePathAndMove();
     }
 
     private void InitVariables()
     {
+        unit = GetComponent<Unit>();
+
         pf = GetComponent<Pathfinding>();
         path = new List<Cell>();
 
         moveAllowed = false;
         moveSetting = false;
+    }
+
+    private void MakePathAndMove()
+    {
+        if (unit.isSelected)
+        {
+            if (moveAllowed)
+            {
+                if (moveSetting)
+                {
+                    MakePath();
+                    MoveSettings();
+                    moveSetting = false;
+                }
+
+                Move();
+            }
+        }
     }
 
     private void MakePath()
@@ -73,8 +82,8 @@ public class MovingController : MonoBehaviour
 
         goal = new Vector3Int(path[cnt].pos.x, path[cnt].pos.y, 0);
 
-        vGoal = grid.CellToWorld(goal);
-        vGoal += (Vector3.right + Vector3.up * 2 + Vector3.forward);
+        vGoal = GlobalGrid.Instance.Grid.CellToWorld(goal);
+        vGoal += (Vector3.right + Vector3.up * unit.transform.position.y + Vector3.forward);
     }
 
     private void Move()
@@ -93,8 +102,8 @@ public class MovingController : MonoBehaviour
             
             goal = new Vector3Int(path[cnt].pos.x, path[cnt].pos.y, 0);
 
-            vGoal = grid.CellToWorld(goal);
-            vGoal += (Vector3.right + Vector3.up * 2 + Vector3.forward);
+            vGoal = GlobalGrid.Instance.Grid.CellToWorld(goal);
+            vGoal += (Vector3.right + Vector3.up * unit.transform.position.y + Vector3.forward);
 
             cnt++;
         }

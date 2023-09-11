@@ -3,29 +3,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Raider : Object, ICharacter
+public class Raider : Unit, ICharacter
 {
-
-    private Grid grid;
     private MovingController mv;
     private Animator anim;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         InitVariables();
     }
 
     private void Update()
     {
         Walk();
+        DrawMoveRange();
     }
 
     private void InitVariables()
     {
         name = "Raider";
+        maxHp = currentHp = 100f;
+        moveRange = 3;
 
         mv = GetComponent<MovingController>();
         anim = GetComponentInChildren<Animator>();
+    }
+
+    public override void DrawMoveRange()
+    {
+        if (isSelected)
+        {
+            base.DrawMoveRange();
+
+            Vector3Int curPos = GetCurrentPositionVector3Int();
+
+            // 변환 위치가 아니고 worldtocell 안하고 그냥 가져온다
+            // 가져온걸 기준으로 마름모 모양의 것들을 변화시켜야 하는데?
+        }
     }
 
     private void Walk()
@@ -34,15 +50,6 @@ public class Raider : Object, ICharacter
         {
             anim.SetBool("isWalk", true);
         }
-    }
-
-    public Vector2Int GetCurrentPosition()
-    {
-        currentPos = grid.WorldToCell(transform.position);
-
-        //print(Calc.Vector3to2Int(currentPos));
-
-        return Calc.Vector3to2Int(currentPos);
     }
 
     public void Attack()

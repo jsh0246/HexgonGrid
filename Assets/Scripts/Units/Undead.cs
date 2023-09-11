@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Undead : Object, ICharacter
+public class Undead : Unit, ICharacter
 {
     public void Attack()
     {
