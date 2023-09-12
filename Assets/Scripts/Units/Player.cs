@@ -13,7 +13,7 @@ public class Player : Unit, ICharacter
         InitVariables();
     }
 
-    private void Update()
+    protected override void Update()
     {
 
     }
