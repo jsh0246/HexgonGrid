@@ -51,7 +51,7 @@ public class Unit : MonoBehaviour
     {
         if (Input.GetMouseButton(2) && isSelected)
         {
-            Vector3 popupPos = Camera.main.WorldToScreenPoint(transform.position);
+            Vector3 popupPos = Camera.main.WorldToScreenPoint(transform.position+Vector3.right * 50);
             popupMenu.anchoredPosition = popupPos;
         }
 

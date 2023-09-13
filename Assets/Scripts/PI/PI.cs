@@ -30,10 +30,6 @@ public class PI : MonoBehaviour
 
     public void Next()
     {
-        //curDecimalPoint = (curDecimalPoint + 1) % 10;
-        //frontNumber.sprite = numbers[curDecimalPoint];
-        //print(curDecimalPoint);
-
         if (curDecimalPoint + 1 >= pi.Length)
         {
             print("final decimal point");
@@ -41,9 +37,6 @@ public class PI : MonoBehaviour
         }
 
         frontNumber.sprite = numbers[pi[++curDecimalPoint]-'0'];
-
-        print(pi[curDecimalPoint]-'0');
-        print("DECIMAL : " + curDecimalPoint);
     }
 
     public void Prev()
@@ -54,16 +47,7 @@ public class PI : MonoBehaviour
             return;
         }
 
-
-
         frontNumber.sprite = numbers[pi[--curDecimalPoint] - '0'];
-        //curDecimalPoint = (curDecimalPoint - 1) % 10;
-
-        //if (curDecimalPoint < 0)
-        //    curDecimalPoint = 10 + curDecimalPoint;
-
-        //frontNumber.sprite = numbers[curDecimalPoint];
-        //print(curDecimalPoint);
     }
 
     public void Teleport()
@@ -74,6 +58,7 @@ public class PI : MonoBehaviour
     private void InitVariables()
     {
         pi = "14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196";
-        curDecimalPoint = 195;
+        curDecimalPoint = 0;
+        frontNumber.sprite = numbers[pi[curDecimalPoint]-'0'];
     }
 }
