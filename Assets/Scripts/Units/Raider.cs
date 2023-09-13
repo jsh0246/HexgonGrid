@@ -12,8 +12,6 @@ public class Raider : Unit, ICharacter
     private Animator anim;
 
     private RaycastHit rangeHit, outRangeHit;
-    //private List<Vector3> vList;
-    //private HashSet<Vector3> vList;
     private HashSet<GameObject> floors;
     private Color grass;
 
@@ -43,10 +41,8 @@ public class Raider : Unit, ICharacter
         mv = GetComponent<MovingController>();
         anim = GetComponentInChildren<Animator>();
 
-        //vList = new List<Vector3>();
-        //vList = new HashSet<Vector3>();
         floors = new HashSet<GameObject>();
-        grass = new Color(96 / 255, 219 / 255, 178 / 255, 1);
+        grass = new Color(96 / 255f, 219 / 255f, 178 / 255f, 1);
     }
 
     private void MoveTo()
@@ -54,12 +50,14 @@ public class Raider : Unit, ICharacter
 
     }
 
+    // 개 거지같이 만듦 ㅋㅋ
     public override void DrawMoveRange()
     {
-        if (isSelected)
+        if (isSelected && movable)
         {
             Vector3 curPos = transform.position;
             List<Vector3> vList = new List<Vector3>();
+            var toRemove = new HashSet<GameObject>();
 
             vList.Add(curPos);
             for (int i = 1; i < moveRange; i++)
@@ -89,13 +87,10 @@ public class Raider : Unit, ICharacter
             foreach (Vector3 v in vList)
             {
                 Ray ray = new Ray(Camera.main.transform.position, v - Camera.main.transform.position);
-                Debug.DrawRay(Camera.main.transform.position, v - Camera.main.transform.position, Color.yellow, 1f);
+                //Debug.DrawRay(Camera.main.transform.position, v - Camera.main.transform.position, Color.yellow, 1f);
 
                 if (Physics.Raycast(ray, out rangeHit, Mathf.Infinity, LayerMask.GetMask("Grid")))
                 {
-                    //originalColor = rangeHit.collider.GetComponent<MeshRenderer>().material.color;
-                    rangeHit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
-
                     floors.Add(rangeHit.collider.gameObject);
                 }
             }
@@ -103,21 +98,29 @@ public class Raider : Unit, ICharacter
             foreach(GameObject o in floors)
             {
                 Ray ray = new Ray(Camera.main.transform.position, o.transform.position - Camera.main.transform.position);
-                Debug.DrawRay(Camera.main.transform.position, o.transform.position - Camera.main.transform.position, Color.blue, 3f);
+                //Debug.DrawRay(Camera.main.transform.position, o.transform.position - Camera.main.transform.position, Color.blue, 3f);
 
                 if(Physics.Raycast(ray, out outRangeHit, Mathf.Infinity, LayerMask.GetMask("Grid")))
                 {
-                    if(rangeHit.collider.GetComponent<MeshRenderer>().material.color == Color.red)
-                    {
-                        print("ININ");
-                        //rangeHit.collider.GetComponent<MeshRenderer>().material.color = grass;
-                        //floors.Remove(o);
-                    }
+                    o.GetComponent<MeshRenderer>().material.color = Color.green;
+                }
+
+                Vector2Int player = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+                Vector2Int cell = new Vector2Int((int)o.transform.position.x, (int)o.transform.position.z);
+
+                if(Calculation.Calc.ManhattenDistance(player, cell) > moveRange * 2)
+                {
+                    o.GetComponent<MeshRenderer>().material.color = grass;
+                    toRemove.Add(o);
                 }
             }
 
-            print("Floors : " + floors.Count);
-            print(vList.Count);
+            foreach (GameObject oo in toRemove)
+            {
+                floors.Remove(oo);
+            }
+
+            toRemove.Clear();
         }
     }
 

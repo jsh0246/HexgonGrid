@@ -12,6 +12,8 @@ public class Unit : MonoBehaviour
     protected float maxHp, currentHp;
     [SerializeField]
     private RectTransform popupMenu;
+
+    protected bool movable, attackable;
     
     protected virtual void Start()
     {
@@ -51,17 +53,34 @@ public class Unit : MonoBehaviour
     {
         if (Input.GetMouseButton(2) && isSelected)
         {
-            Vector3 popupPos = Camera.main.WorldToScreenPoint(transform.position+Vector3.right * 50);
+            Vector3 popupPos = Camera.main.WorldToScreenPoint(transform.position);
             popupMenu.anchoredPosition = popupPos;
         }
 
-        if(Input.GetMouseButtonDown(0) && isSelected)
-        {
-            popupMenu.anchoredPosition = Vector3.down * 2000;
-        }
+
 
         // 게임형식을 좀 갖추고 세부 진행
         // 파이 맞추기 / 죽으면 뒤에꺼 보이기 / 파이 그림 찾기 / 파이 그림 연속생성 문제 풀어가면서
         // 
+    }
+
+    private void PopupMenuDown()
+    {
+        popupMenu.anchoredPosition = Vector3.down * 2000;
+    }
+
+    public void PopupMove()
+    {
+        movable = true;
+    }
+
+    public void PopupAttack()
+    {
+        attackable = true;
+    }
+
+    public void PopupCancel()
+    {
+        PopupMenuDown();
     }
 }
