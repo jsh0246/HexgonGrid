@@ -9,6 +9,7 @@ public class Cell
     public float g { get; private set; }
     public float h { get; private set; }
     public Cell prevCell { get; set; }
+    public Vector3 dir { get; set; }
 
     //public Cell(float g, float h)
     //{

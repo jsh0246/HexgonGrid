@@ -70,7 +70,7 @@ public class Pathfinding : MonoBehaviour
             Vector3 worldPoint = ray.GetPoint(-ray.origin.y / ray.direction.y);
             Vector2Int moousePoint = Calc.Vector3to2Int(GlobalGrid.Instance.Grid.WorldToCell(worldPoint));
 
-            //print("MOUSE POSITION : " + moousePoint);
+            print("MOUSE POSITION : " + moousePoint);
         }
     }
 
@@ -197,6 +197,10 @@ public class Pathfinding : MonoBehaviour
         openList = openList.OrderBy(x => x.f).ToHashSet();
         var next = openList.ElementAt(0);
         next.prevCell = c;
+
+        Vector2Int dir = next.pos - c.pos;
+        c.dir = new Vector3(dir.x, 0, dir.y);
+
         
         //print(next.PrintCell());
 

@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
     private RectTransform popupMenu;
 
     protected bool movable, attackable;
+    //protected Vector3 headDir;
     
     protected virtual void Start()
     {
@@ -28,6 +29,10 @@ public class Unit : MonoBehaviour
     private void InitVariables()
     {
         isSelected = false;
+
+        // 자주 실행하니까 일단 true로 둔다
+        movable = true;
+        attackable = true;
     }
 
     public Vector2Int GetCurrentPosition()

@@ -22,7 +22,7 @@ public class Timer : MonoBehaviour
     {
         duration = second;
         remainingDuration = second;
-        StartCoroutine(Tiktok());
+        //StartCoroutine(Tiktok());
     }
 
     private IEnumerator Tiktok()

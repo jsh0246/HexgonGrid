@@ -26,7 +26,7 @@ public class MovingController : MonoBehaviour
         InitVariables();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         MakePathAndMove();
     }
@@ -89,8 +89,14 @@ public class MovingController : MonoBehaviour
     private void Move()
     {
         transform.position = Vector3.MoveTowards(transform.position, vGoal, Time.deltaTime * 5f);
+        // 한칸한칸이동할때마다 LookRotation을 잡아줘야하는데?
+
+
+
         if (transform.position == vGoal)
         {
+            //transform.rotation = Quaternion.LookRotation(path[cnt].dir);
+
             if (cnt == path.Count)
             {
                 //print("도착");
