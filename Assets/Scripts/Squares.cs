@@ -31,7 +31,7 @@ public class Squares : MonoBehaviour
     public Square[,] square { get; private set; }
     public int size { get; private set; }
 
-    private RaycastHit hit;
+    private RaycastHit hit, _hit;
 
     private void Awake()
     {
@@ -96,6 +96,21 @@ public class Squares : MonoBehaviour
 
     public Square GetSquare(int x, int y)
     {
+        return square[x, y];
+    }
+
+    public Unit GetUnit(int x, int y)
+    {
+        Vector3 pos = GetSquare(x, y).floor.transform.position;
+
+        Ray ray = new Ray(Camera.main.transform.position, pos - Camera.main.transform.position);
+        Debug.DrawRay(Camera.main.transform.position, pos - Camera.main.transform.position, Color.red, 10f);
+
+        if (Physics.Raycast(ray, out _hit, Mathf.Infinity, LayerMask.GetMask("Unit")))
+        {
+            return _hit.collider.gameObject.GetComponent<Unit>();
+        }
+
         return null;
     }
 }

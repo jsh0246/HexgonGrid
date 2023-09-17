@@ -40,6 +40,6 @@ public class Cell
     {
         //print("Cell Position : " + pos);
         //return "f : " + f + ", g : " + g + ", h : " + h;
-        return "(" + pos.x + ", " + pos.y + ") / f : " + f + ", g : " + g + ", h : " + h;
+        return "(" + pos.x + ", " + pos.y + ") / f : " + f + ", g : " + g + ", h : " + h + " / DIR : " + dir;
     }
 }

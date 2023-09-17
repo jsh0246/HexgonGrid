@@ -72,8 +72,8 @@ public class MovingController : MonoBehaviour
 
         path.Reverse();
 
-        //foreach (Cell c in path)
-        //    print(c.PrintCell());
+        foreach (Cell c in path)
+            print(c.PrintCell());
     }
 
     private void MoveSettings()
@@ -84,13 +84,13 @@ public class MovingController : MonoBehaviour
 
         vGoal = GlobalGrid.Instance.Grid.CellToWorld(goal);
         vGoal += (Vector3.right + Vector3.up * unit.transform.position.y + Vector3.forward);
+        cnt++;
     }
 
     private void Move()
     {
         transform.position = Vector3.MoveTowards(transform.position, vGoal, Time.deltaTime * 5f);
         // 한칸한칸이동할때마다 LookRotation을 잡아줘야하는데?
-
 
 
         if (transform.position == vGoal)
@@ -111,7 +111,11 @@ public class MovingController : MonoBehaviour
             vGoal = GlobalGrid.Instance.Grid.CellToWorld(goal);
             vGoal += (Vector3.right + Vector3.up * unit.transform.position.y + Vector3.forward);
 
+            if (path[cnt].dir != Vector3.zero)
+                transform.rotation = Quaternion.LookRotation(path[cnt].dir);
+
             cnt++;
+            print(cnt);
         }
     }
 

@@ -20,17 +20,10 @@ public class Test : MonoBehaviour
 
     private void Test1()
     {
-        HashSet<string> list = new HashSet<string>();
-
-        list.Add("ABC");
-        list.Add("ABC");
-
-        list.Add("ABC");
-        list.Add("ABC");
-
-        list.Add("ABCCC");
-
-        print(list.Count);
+        //Squares.Instance.GetSquare(3, 3).floor.GetComponent<MeshRenderer>().material.color = Color.magenta;
+        //print(Squares.Instance.GetUnit(4, 3).name);
+        print(Squares.Instance.GetUnit(3, 8));
+        print(Squares.Instance.GetUnit(5, 8));
 
     }
 }

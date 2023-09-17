@@ -201,13 +201,15 @@ public class Pathfinding : MonoBehaviour
         Vector2Int dir = next.pos - c.pos;
         c.dir = new Vector3(dir.x, 0, dir.y);
 
-        
+
         //print(next.PrintCell());
+        //print(c.dir);
 
         //해당 좌표가 Goal이면 종료, 아니면 계속 진행
         if (next.pos == goal)
         {
             //print("Arrived");
+            next.dir = c.dir;
             goalCell = next;
 
             openList.Clear();

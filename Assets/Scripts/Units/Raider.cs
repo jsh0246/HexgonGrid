@@ -90,7 +90,7 @@ public class Raider : Unit, ICharacter
             foreach (Vector3 v in vList)
             {
                 Ray ray = new Ray(Camera.main.transform.position, v - Camera.main.transform.position);
-                Debug.DrawRay(Camera.main.transform.position, v - Camera.main.transform.position, Color.yellow, 1f);
+                //Debug.DrawRay(Camera.main.transform.position, v - Camera.main.transform.position, Color.yellow, 1f);
 
                 if (Physics.Raycast(ray, out rangeHit, Mathf.Infinity, LayerMask.GetMask("Grid")))
                 {
@@ -104,14 +104,14 @@ public class Raider : Unit, ICharacter
             foreach(GameObject o in floors)
             {
                 Ray ray = new Ray(Camera.main.transform.position, o.transform.position - Camera.main.transform.position);
-                Debug.DrawRay(Camera.main.transform.position, o.transform.position - Camera.main.transform.position, Color.blue, 3f);
+                //Debug.DrawRay(Camera.main.transform.position, o.transform.position - Camera.main.transform.position, Color.blue, 3f);
 
                 if(Physics.Raycast(ray, out outRangeHit, Mathf.Infinity, LayerMask.GetMask("Grid")))
                 {
                     o.GetComponent<MeshRenderer>().material.color = Color.green;
                 }
 
-                Vector2Int player = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+                Vector2Int player = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
                 Vector2Int cell = new Vector2Int((int)o.transform.position.x, (int)o.transform.position.z);
 
                 if(Calculation.Calc.ManhattenDistance(player, cell) > moveRange * 2)
