@@ -951,8 +951,8 @@ GameObject:
   - component: {fileID: 7920017486013645181}
   - component: {fileID: 8785167208803377957}
   - component: {fileID: 4073056401944215972}
-  - component: {fileID: 5896724039704395369}
   - component: {fileID: 1630950827818448754}
+  - component: {fileID: 5896724039704395369}
   m_Layer: 8
   m_Name: Raider
   m_TagString: Untagged
@@ -975,7 +975,7 @@ Transform:
   - {fileID: 3613085998281150469}
   - {fileID: 3618768587865540844}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8785167208803377957
 BoxCollider:
@@ -1011,6 +1011,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupMenu: {fileID: 0}
+--- !u!114 &1630950827818448754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2241367410914750162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf611f006bdd96449ec4b2959fc110a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5896724039704395369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,18 +1037,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSetting: 0
   moveAllowed: 0
---- !u!114 &1630950827818448754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2241367410914750162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf611f006bdd96449ec4b2959fc110a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2253117870454087044
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,9 +9,10 @@ public class Unit : MonoBehaviour
     public int moveRange { get; protected set; }
 
     protected Vector3Int currentPos { get; set; }
-    protected float maxHp, currentHp;
+    protected int maxHp, currentHp;
     [SerializeField]
     private RectTransform popupMenu;
+    private HealthBar healthBar;
 
     protected bool movable, attackable;
     //protected Vector3 headDir;
@@ -33,6 +34,10 @@ public class Unit : MonoBehaviour
         // 자주 실행하니까 일단 true로 둔다
         movable = true;
         attackable = true;
+
+        currentHp = maxHp = 100;
+        healthBar = GetComponentInChildren<HealthBar>();
+        healthBar.SetMaxHealth(maxHp);
     }
 
     public Vector2Int GetCurrentPosition()
@@ -87,5 +92,13 @@ public class Unit : MonoBehaviour
     public void PopupCancel()
     {
         PopupMenuDown();
+    }
+
+    public void GetDamage(int damage)
+    {
+        currentHp -= damage;
+        healthBar.SetHealth(currentHp);
+
+        print(currentHp);
     }
 }

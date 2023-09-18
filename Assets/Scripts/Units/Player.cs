@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Calculation;
-
 public class Player : Unit, ICharacter
 {
     protected override void Start()
@@ -20,7 +18,7 @@ public class Player : Unit, ICharacter
 
     private void InitVariables()
     {
-        name = "Player 1";
+
     }
 
     /* SKills */

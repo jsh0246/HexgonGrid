@@ -72,8 +72,8 @@ public class MovingController : MonoBehaviour
 
         path.Reverse();
 
-        foreach (Cell c in path)
-            print(c.PrintCell());
+        //foreach (Cell c in path)
+        //    print(c.PrintCell());
     }
 
     private void MoveSettings()
@@ -115,7 +115,7 @@ public class MovingController : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(path[cnt].dir);
 
             cnt++;
-            print(cnt);
+            //print(cnt);
         }
     }
 

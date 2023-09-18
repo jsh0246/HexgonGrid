@@ -35,7 +35,7 @@ public class Raider : Unit, ICharacter
     private void InitVariables()
     {
         name = "Raider";
-        maxHp = currentHp = 100f;
+        maxHp = currentHp = 100;
         moveRange = 3;
 
         mv = GetComponent<MovingController>();
@@ -146,7 +146,31 @@ public class Raider : Unit, ICharacter
         {
             anim.SetTrigger("Attack");
 
-            //transform.rotation = Quaternion.LookRotation(Vector3.right);
+            Vector2Int gridPos = GetCurrentPosition();
+            Vector2Int squarePos = Squares.Instance.GridToSquareCoordinate(gridPos);
+
+            Vector2Int[] skillRange = new Vector2Int[4];
+            Vector2Int v1 = new Vector2Int(Mathf.RoundToInt(transform.forward.x), Mathf.RoundToInt(transform.forward.z));
+            Vector2Int v2 = new Vector2Int(Mathf.RoundToInt(transform.right.x), Mathf.RoundToInt(transform.right.z));
+            Vector2Int v3 = new Vector2Int(-Mathf.RoundToInt(transform.right.x), -Mathf.RoundToInt(transform.right.z));
+
+            skillRange[0] = v1;
+            skillRange[1] = v1 + v1;
+            skillRange[2] = skillRange[1] + v2;
+            skillRange[3] = skillRange[1] + v3;
+
+            //foreach (var skill in skillRange)
+            //    print(skill);
+
+            foreach (var skill in skillRange) {
+                Unit unit = Squares.Instance.GetUnit(squarePos + skill);
+                //print(squarePos + skill);
+
+                if (unit != null)
+                {
+                    unit.GetDamage(10);
+                }
+            }
 
         }
     }
