@@ -1,29 +1,25 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TestTools;
-using UnityEngine.UIElements;
 
 public class Test : MonoBehaviour
 {
-    private void Start()
+    protected int lollipop;
+
+    protected virtual void Start()
     {
-        Test1();
+        //lollipop = 100;
+
+        //POP();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-
+        POP();
     }
 
-    private void Test1()
+    private void POP()
     {
-        //Squares.Instance.GetSquare(3, 3).floor.GetComponent<MeshRenderer>().material.color = Color.magenta;
-        //print(Squares.Instance.GetUnit(4, 3).name);
-        print(Squares.Instance.GetUnit(3, 8));
-        print(Squares.Instance.GetUnit(5, 8));
-
+        print(lollipop);
     }
 }

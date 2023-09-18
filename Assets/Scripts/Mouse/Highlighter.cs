@@ -46,7 +46,7 @@ public class Highlighter : MonoBehaviour
             }
         }
 
-        if(highlighted && hit.collider == null)
+        if (highlighted && (hit.collider == null || hit.collider.gameObject != gridObject))
         {
             gridObject.GetComponent<MeshRenderer>().material.color = originalColor;
             highlighted = false;

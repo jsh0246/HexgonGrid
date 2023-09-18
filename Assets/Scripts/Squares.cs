@@ -30,6 +30,7 @@ public class Squares : MonoBehaviour
 
     public Square[,] square { get; private set; }
     public int size { get; private set; }
+    [SerializeField] private Camera verticalCamera;
 
     private RaycastHit hit, _hit;
 
@@ -128,16 +129,25 @@ public class Squares : MonoBehaviour
     {
         Vector3 pos = GetSquare(v.x, v.y).floor.transform.position;
 
-        //Camera verticalCamera = new Camera(
+        //Camera verticalCamera = new Camera();
+        verticalCamera.transform.position = new Vector3(pos.x, 30, pos.z);
+        verticalCamera.gameObject.SetActive(true);
 
-        Ray ray = new Ray(Camera.main.transform.position, pos - Camera.main.transform.position);
+        // 사용중인 카메라에서 레이를 쏘면 콜라이더의 크기나 모양에 따라 (히트되는걸 의도했음에도 불구하고) 히트되지 못하는 경우가 있어서
+        // 카메라를 새로 만들어서 직각으로 레이를 쐈다
+        //Ray ray = new Ray(Camera.main.transform.position, pos - Camera.main.transform.position);
         //Debug.DrawRay(Camera.main.transform.position, pos - Camera.main.transform.position, Color.red, 10f);
+        
+        Ray ray = new Ray(verticalCamera.transform.position, pos- verticalCamera.transform.position);
+        //Debug.DrawRay(verticalCamera.transform.position, pos-verticalCamera.transform.position, Color.red, 10f);
 
         if (Physics.Raycast(ray, out _hit, Mathf.Infinity, LayerMask.GetMask("Unit")))
         {
+            verticalCamera.gameObject.SetActive(false);
             return _hit.collider.gameObject.GetComponent<Unit>();
         }
 
+        verticalCamera.gameObject.SetActive(false);
         return null;
     }
 }

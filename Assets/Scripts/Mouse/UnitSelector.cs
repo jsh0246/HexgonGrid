@@ -37,12 +37,31 @@ public class UnitSelector : MonoBehaviour
                 if (unit != null)
                 {
                     unit.isSelected = false;
+                    print(unit + "is unselected");
+
+                    unit.OnDeselected();
+                    unit.RemoveMoveRange();
+                    unit.SkillImageChangeToBlank();
                 }
 
                 unit = hit.collider.GetComponent<Unit>();
                 unit.isSelected = true;
+                print(unit + "is selected");
 
+                unit.OnSelected();
                 unit.DrawMoveRange();
+                unit.SkillImageChange();
+            } else
+            {
+                if (unit != null)
+                {
+                    unit.isSelected = false;
+                    print(unit + "is unselected");
+
+                    unit.OnDeselected();
+                    unit.RemoveMoveRange();
+                    unit.SkillImageChangeToBlank();
+                }
             }
         }
     }
