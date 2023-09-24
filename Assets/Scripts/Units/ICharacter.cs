@@ -1,8 +1,7 @@
 public interface ICharacter
 {
-    public void Attack();
-    public void SkillQ();
-    public void SkillW();
-    public void SkillE();
-    public void SkillUltR();
+    public void SkillQ(int n);
+    public void SkillW(int n);
+    public void SkillE(int n);
+    public void SkillR(int n);
 }

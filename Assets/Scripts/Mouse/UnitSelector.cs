@@ -37,7 +37,7 @@ public class UnitSelector : MonoBehaviour
                 if (unit != null)
                 {
                     unit.isSelected = false;
-                    print(unit + "is unselected");
+                    //print(unit + "<color=#00FF22> is unselected</color>");
 
                     unit.OnDeselected();
                     unit.RemoveMoveRange();
@@ -46,17 +46,18 @@ public class UnitSelector : MonoBehaviour
 
                 unit = hit.collider.GetComponent<Unit>();
                 unit.isSelected = true;
-                print(unit + "is selected");
+                //print(unit + "<color=cyan> is selected</color>");
 
                 unit.OnSelected();
                 unit.DrawMoveRange();
                 unit.SkillImageChange();
+
             } else
             {
                 if (unit != null)
                 {
                     unit.isSelected = false;
-                    print(unit + "is unselected");
+                    //print(unit + "<color=#00FF22> is unselected</color>");
 
                     unit.OnDeselected();
                     unit.RemoveMoveRange();

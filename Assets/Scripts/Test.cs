@@ -18,7 +18,7 @@ public class Test : MonoBehaviour
         POP();
     }
 
-    private void POP()
+    protected void POP()
     {
         print(lollipop);
     }

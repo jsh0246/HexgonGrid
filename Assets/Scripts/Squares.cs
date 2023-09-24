@@ -89,7 +89,7 @@ public class Squares : MonoBehaviour
         Ray ray = new Ray(Camera.main.transform.position, coordinate - Camera.main.transform.position);
         //Debug.DrawRay(Camera.main.transform.position, coordinate - Camera.main.transform.position, Color.red, 10f);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Grid")))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Area")))
         {
             square[i, j].floor = hit.collider.gameObject;
         }
@@ -125,7 +125,10 @@ public class Squares : MonoBehaviour
         return null;
     }
 
-    public Unit GetUnit(Vector2Int v)
+    // layer를 받아서 하는 함수로 만들었는데 나중에 문제가 생길지 모르겠다, 이름 중복 통일 등의 문제, Grid에서 한번겪음(내가 정의한 Grid와 Unity의 Grid 충돌)
+    // layer 이름과 스크립트(컴포넌트)의 명이 같아야함
+    // 컴포넌트로 리턴하기 때문에 GameObject로 리턴값을 받을수가 없었다. 이유는 잘 모르겠다, 컴포넌트란 변수를 처음 써봄, Getcomponent<> 아니고 Getcomponent()도 처음 써봄 Type도 마찬가지
+    public Component GetObject(Vector2Int v, Type layer)
     {
         Vector3 pos = GetSquare(v.x, v.y).floor.transform.position;
 
@@ -137,14 +140,14 @@ public class Squares : MonoBehaviour
         // 카메라를 새로 만들어서 직각으로 레이를 쐈다
         //Ray ray = new Ray(Camera.main.transform.position, pos - Camera.main.transform.position);
         //Debug.DrawRay(Camera.main.transform.position, pos - Camera.main.transform.position, Color.red, 10f);
-        
-        Ray ray = new Ray(verticalCamera.transform.position, pos- verticalCamera.transform.position);
-        //Debug.DrawRay(verticalCamera.transform.position, pos-verticalCamera.transform.position, Color.red, 10f);
 
-        if (Physics.Raycast(ray, out _hit, Mathf.Infinity, LayerMask.GetMask("Unit")))
+        Ray ray = new Ray(verticalCamera.transform.position, pos - verticalCamera.transform.position);
+        //Debug.DrawRay(verticalCamera.transform.position, pos-verticalCamera.transform.position, Color.red, 100f);
+
+        if (Physics.Raycast(ray, out _hit, Mathf.Infinity, LayerMask.GetMask(layer.ToString())))
         {
             verticalCamera.gameObject.SetActive(false);
-            return _hit.collider.gameObject.GetComponent<Unit>();
+            return _hit.collider.gameObject.GetComponent(layer);
         }
 
         verticalCamera.gameObject.SetActive(false);

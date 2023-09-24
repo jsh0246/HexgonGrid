@@ -38,27 +38,22 @@ public class Player : Unit, ICharacter
 
     }
 
-    public void Attack()
+    public void SkillQ(int q)
     {
         throw new System.NotImplementedException();
     }
 
-    public void SkillQ()
+    public void SkillW(int w)
     {
         throw new System.NotImplementedException();
     }
 
-    public void SkillW()
+    public void SkillE(int e)
     {
         throw new System.NotImplementedException();
     }
 
-    public void SkillE()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void SkillUltR()
+    public void SkillR(int r)
     {
         throw new System.NotImplementedException();
     }

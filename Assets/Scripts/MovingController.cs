@@ -38,8 +38,8 @@ public class MovingController : MonoBehaviour
         pf = GetComponent<Pathfinding>();
         path = new List<Cell>();
 
-        moveAllowed = false;
-        moveSetting = false;
+        //moveAllowed = true;
+        //moveSetting = true;
     }
 
     private void MakePathAndMove()

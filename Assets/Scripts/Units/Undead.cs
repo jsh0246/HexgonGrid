@@ -17,33 +17,53 @@ public class Undead : Unit, ICharacter
         base.Update();
     }
 
+    protected override void LateUpdate()
+    {
+        SkillCooldown();
+    }
+
     private void InitVariables()
     {
-        moveRange = 2;
+        moveRange = 1;
+        skills = new List<Skill> { SkillQ, SkillW, SkillE, SkillR };
     }
 
-    public void Attack()
+    protected override void SkillCooldown()
     {
-        throw new System.NotImplementedException();
+        SkillShot();
+        base.SkillCooldown();
     }
 
-    public void SkillE()
+    private void SkillShot()
     {
-        throw new System.NotImplementedException();
+        for (int i = 0; i < keyCodes.Length; i++)
+        {
+            if (isSelected && Input.GetKeyDown(keyCodes[i]) && !unitSkills.isCooldown[i])
+            {
+                skills[i](i);
+            }
+        }
     }
 
-    public void SkillQ()
+    public void SkillQ(int q)
     {
-        throw new System.NotImplementedException();
+        anim.SetTrigger("Q");
+
+        print(name + "Q Skill");
     }
 
-    public void SkillUltR()
+    public void SkillW(int w)
     {
-        throw new System.NotImplementedException();
+        print(name + "W Skill");
     }
 
-    public void SkillW()
+    public void SkillE(int e)
     {
-        throw new System.NotImplementedException();
+        print(name + "E Skill");
+    }
+
+    public void SkillR(int r)
+    {
+        print(name + "R Skill");
     }
 }

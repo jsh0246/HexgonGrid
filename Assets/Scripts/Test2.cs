@@ -18,6 +18,8 @@ public class Test2 : Test
         //base.Update();
 
         //POPPOP();
+
+        POP();
     }
 
     private void POPPOP()

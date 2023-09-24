@@ -1,29 +1,44 @@
 using Calculation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
-    
     public bool isSelected { get; set; }
     public int moveRange { get; protected set; }
+    
+    /* Skills */
+    [SerializeField] protected Sprite[] skillImages;
+    [SerializeField] protected Image[] skillFrames;
+    protected UnitSkills unitSkills;
+    protected KeyCode[] keyCodes;
+    protected delegate void Skill(int n);
+    protected List<Skill> skills;
+
+    [SerializeField] protected SpriteRenderer selector;
+    [SerializeField] private RectTransform popupMenu;
 
     protected Vector3Int currentPos { get; set; }
     protected int maxHp, currentHp;
-    [SerializeField] private RectTransform popupMenu;
-    [SerializeField] protected Sprite[] skillImages;
-    [SerializeField] protected Image[] skillFrames;
-    private HealthBar healthBar;
+
+    protected MovingController mv;
+    protected Animator anim;
 
     protected bool movable, attackable;
-    [SerializeField] protected SpriteRenderer selector;
-    //protected Vector3 headDir;
+
+    private HealthBar healthBar;
 
     private RaycastHit rangeHit, outRangeHit;
     private HashSet<GameObject> floors;
     private Color grass;
+
+    protected SoundManager soundManager;
+
+    protected int[] skillDamage;
 
     protected virtual void Start()
     {
@@ -32,17 +47,30 @@ public class Unit : MonoBehaviour
 
     protected virtual void Update()
     {
+        Walk();
+
         PopupMenu();
         DrawMoveRange();
+    }
+
+    protected virtual void LateUpdate()
+    {
+        //SkillCooldown();
     }
 
     private void InitVariables()
     {
         isSelected = false;
 
+        unitSkills = GetComponent<UnitSkills>();
+        keyCodes = new KeyCode[4]{ KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R };
+
         // 자주 실행하니까 일단 true로 둔다
         movable = true;
         attackable = true;
+
+        mv = GetComponent<MovingController>();
+        anim = GetComponentInChildren<Animator>();
 
         currentHp = maxHp = 100;
         healthBar = GetComponentInChildren<HealthBar>();
@@ -50,6 +78,8 @@ public class Unit : MonoBehaviour
 
         floors = new HashSet<GameObject>();
         grass = new Color(96 / 255f, 219 / 255f, 178 / 255f, 1);
+
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
     public Vector2Int GetCurrentPosition()
@@ -66,6 +96,7 @@ public class Unit : MonoBehaviour
         return currentPos;
     }
 
+    // 개 거지같이 만듦 ㅋㅋ
     public void DrawMoveRange()
     {
         if (isSelected && movable)
@@ -107,9 +138,10 @@ public class Unit : MonoBehaviour
                 Ray ray = new Ray(Camera.main.transform.position, v - Camera.main.transform.position);
                 //Debug.DrawRay(Camera.main.transform.position, v - Camera.main.transform.position, Color.yellow, 1f);
 
-                if (Physics.Raycast(ray, out rangeHit, Mathf.Infinity, LayerMask.GetMask("Grid")))
+                if (Physics.Raycast(ray, out rangeHit, Mathf.Infinity, LayerMask.GetMask("Area")))
                 {
-                    floors.Add(rangeHit.collider.gameObject);
+                    if(rangeHit.collider.gameObject)
+                        floors.Add(rangeHit.collider.gameObject);
                 }
             }
 
@@ -118,21 +150,26 @@ public class Unit : MonoBehaviour
             // 결론적으로 내 주변의 gameobject들만 색깔이 변한채로 남는다.
             foreach (GameObject o in floors)
             {
-                Ray ray = new Ray(Camera.main.transform.position, o.transform.position - Camera.main.transform.position);
-                //Debug.DrawRay(Camera.main.transform.position, o.transform.position - Camera.main.transform.position, Color.blue, 3f);
-
-                if (Physics.Raycast(ray, out outRangeHit, Mathf.Infinity, LayerMask.GetMask("Grid")))
+                // //if (o != null) 최적화?하기?
+                // //if (o != null)과 위의 if(rangeHit.collider.gameObject) 와 아래의 Dead()에 SetActive() or Destroy는 같이 연관되어있음
+                //if (o != null)
                 {
-                    o.GetComponent<MeshRenderer>().material.color = Color.green;
-                }
+                    Ray ray = new Ray(Camera.main.transform.position, o.transform.position - Camera.main.transform.position);
+                    //Debug.DrawRay(Camera.main.transform.position, o.transform.position - Camera.main.transform.position, Color.blue, 3f);
 
-                Vector2Int player = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-                Vector2Int cell = new Vector2Int((int)o.transform.position.x, (int)o.transform.position.z);
+                    if (Physics.Raycast(ray, out outRangeHit, Mathf.Infinity, LayerMask.GetMask("Area")))
+                    {
+                        o.GetComponent<MeshRenderer>().material.color = Color.green;
+                    }
 
-                if (Calculation.Calc.ManhattenDistance(player, cell) > moveRange * 2)
-                {
-                    o.GetComponent<MeshRenderer>().material.color = grass;
-                    toRemove.Add(o);
+                    Vector2Int player = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
+                    Vector2Int cell = new Vector2Int((int)o.transform.position.x, (int)o.transform.position.z);
+
+                    if (Calculation.Calc.ManhattenDistance(player, cell) > moveRange * 2)
+                    {
+                        o.GetComponent<MeshRenderer>().material.color = grass;
+                        toRemove.Add(o);
+                    }
                 }
             }
 
@@ -193,7 +230,41 @@ public class Unit : MonoBehaviour
         currentHp -= damage;
         healthBar.SetHealth(currentHp);
 
-        print(currentHp);
+        print(name + " : " + currentHp);
+
+        if (currentHp <= 0)
+        {
+            Dead();
+        }
+    }
+
+    private void Dead()
+    {
+        Destroy(gameObject);
+
+        Vector2Int gridPos = GetCurrentPosition();
+        Vector2Int squarePos = Squares.Instance.GridToSquareCoordinate(gridPos);
+
+        Vector2Int[,] skillRange = new Vector2Int[3, 3];
+        //List<Vector2Int> skillRange = new List<Vector2Int>();
+        for(int i=0; i<3; i++)
+        {
+            for(int j=0; j<3; j++)
+            {
+                skillRange[i, j] = new Vector2Int(i-1, j-1);
+                //print(skillRange[i, j]);
+            }
+        }
+
+        foreach (var skill in skillRange)
+        {
+            Area area = Squares.Instance.GetObject(squarePos + skill, Type.GetType("Area")) as Area;
+
+
+            // 뭐가 더 나을까
+            area.gameObject.SetActive(false);
+            //Destroy(area.gameObject);
+        }
     }
 
     public void SkillImageChange()
@@ -209,6 +280,19 @@ public class Unit : MonoBehaviour
         for (int i = 0; i < skillFrames.Length; i++)
         {
             skillFrames[i].sprite = null;
+
+            // 허공에 찍었을 떄 처리 코드 넣기
+            unitSkills.OnCancel(i);
+
+        }
+    }
+
+    protected virtual void SkillCooldown()
+    {
+        unitSkills.SkillCooldown();
+        if(isSelected)
+        {
+            unitSkills.ChangeUnit();
         }
     }
 
@@ -220,5 +304,17 @@ public class Unit : MonoBehaviour
     public void OnDeselected()
     {
         selector.gameObject.SetActive(false);
+    }
+
+    private void Walk()
+    {
+        if (mv.moveAllowed)
+        {
+            anim.SetBool("isWalk", true);
+        }
+        else
+        {
+            anim.SetBool("isWalk", false);
+        }
     }
 }
