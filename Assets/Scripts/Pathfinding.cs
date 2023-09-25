@@ -31,8 +31,6 @@ public class Pathfinding : MonoBehaviour
     private HashSet<Cell> openList;
     private HashSet<Cell> closedList;
 
-    
-
     // 이렇게 서로 pathfinding과 movecontroller가 변수를 handshake하고 있는것이 올바른가?
     // 중간에 정거장같은 manager를 둬야하나?
     MovingController mvctrl;

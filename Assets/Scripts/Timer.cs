@@ -15,14 +15,14 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        Being(60);
+        Being(90);
     }
 
     private  void Being(int second)
     {
         duration = second;
         remainingDuration = second;
-        //StartCoroutine(Tiktok());
+        StartCoroutine(Tiktok());
     }
 
     private IEnumerator Tiktok()

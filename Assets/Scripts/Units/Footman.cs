@@ -50,24 +50,32 @@ public class Footman : Unit, ICharacter
     public void SkillQ(int q)
     {
         anim.SetTrigger(keyCodes[q].ToString());
-        GameObject _stoneSlash = Instantiate(skillEffects[q]);
+        GameObject footmanSkillQ = Instantiate(skillEffects[q], transform.position + transform.forward * 2, Quaternion.identity);
+
+        StartCoroutine(SkillEffectEnd(footmanSkillQ, 1f));
     }
 
     public void SkillW(int w)
     {
         anim.SetTrigger(keyCodes[0].ToString());
-        GameObject _stoneSlash = Instantiate(skillEffects[w]);
+        GameObject footmanSkillW = Instantiate(skillEffects[w], transform.position + transform.forward * 4, Quaternion.identity);
+
+        StartCoroutine(SkillEffectEnd(footmanSkillW, 1f));
     }
 
     public void SkillE(int e)
     {
         anim.SetTrigger(keyCodes[1].ToString());
-        GameObject _stoneSlash = Instantiate(skillEffects[e]);
+        GameObject footmanSkillE = Instantiate(skillEffects[e], transform.position + transform.forward * 4, Quaternion.identity);
+
+        StartCoroutine(SkillEffectEnd(footmanSkillE, 5f));
     }
 
     public void SkillR(int r)
     {
         anim.SetTrigger(keyCodes[0].ToString());
-        GameObject _stoneSlash = Instantiate(skillEffects[r]);
+        GameObject footmanSkillR = Instantiate(skillEffects[r], transform.position + transform.forward * 4, Quaternion.identity);
+
+        StartCoroutine(SkillEffectEnd(footmanSkillR, 8f));
     }
 }

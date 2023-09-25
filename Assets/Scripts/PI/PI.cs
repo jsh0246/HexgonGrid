@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 public class PI : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class PI : MonoBehaviour
     private int curDecimalPoint;
 
     [SerializeField] private Image frontNumber;
-    [SerializeField] private TextMeshProUGUI input;
     [SerializeField] private Sprite[] numbers;
+    [SerializeField] private TMP_InputField input;
+    [SerializeField] private TMP_InputField teleportNumInput;
 
     private void Start()
     {
@@ -25,7 +27,17 @@ public class PI : MonoBehaviour
 
     public void HittheNumber()
     {
-        print(input.text);
+        int hitNum;
+
+        if(input.text.Length > 0)
+        {
+            hitNum = int.Parse(input.text);
+
+            if(hitNum == pi[curDecimalPoint]-'0')
+            {
+
+            }
+        }
     }
 
     public void Next()
@@ -52,7 +64,16 @@ public class PI : MonoBehaviour
 
     public void Teleport()
     {
-        print(-1 % 10);
+        if (teleportNumInput.text.Length > 0 )
+        {
+            curDecimalPoint = int.Parse(teleportNumInput.text);
+
+            if (curDecimalPoint >= 1 && curDecimalPoint <= 200)
+            {
+                frontNumber.sprite = numbers[pi[curDecimalPoint-1] - '0'];
+                --curDecimalPoint;
+            }
+        }
     }
 
     private void InitVariables()
