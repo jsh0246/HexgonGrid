@@ -15,11 +15,11 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource UndeadSkillSound(int i)
     {
-        return raiderSkillSounds[i];
+        return undeadSkillSounds[i];
     }
 
     public AudioSource FootmanSkillSound(int i)
     {
-        return raiderSkillSounds[i];
+        return footmanSkillSounds[i];
     }
 }

@@ -8,9 +8,10 @@ using System;
 
 public class Raider : Unit, ICharacter
 {
-    [SerializeField] private GameObject skillW;
-    [SerializeField] private GameObject skillE;
-    [SerializeField] private GameObject skillR;
+    //[SerializeField] protected GameObject skillEffects
+    //[SerializeField] private GameObject skillW;
+    //[SerializeField] private GameObject skillE;
+    //[SerializeField] private GameObject skillR;
 
     protected override void Start()
     {
@@ -33,7 +34,6 @@ public class Raider : Unit, ICharacter
     {
         moveRange = 3;
         skills = new List<Skill> { SkillQ, SkillW, SkillE, SkillR };
-
         skillDamage = new int[4] { 10, 20, 10, 40 };
     }
 
@@ -55,9 +55,13 @@ public class Raider : Unit, ICharacter
         }
     }
 
+    // 데미지 범위 좌표잡는것도 함수 처리 할까?
     public void SkillQ(int q)
     {
-        anim.SetTrigger("Q");
+        anim.SetTrigger(keyCodes[q].ToString());
+
+        // 쿼터니언 개같이 찍어서 만들었는데 원리 이해해야함...
+        GameObject stoneSlash = Instantiate(skillEffects[q], skillEffects[q].transform.position + transform.position + transform.forward * 2, Quaternion.Euler(transform.localEulerAngles - Vector3.up * 90));
 
         Vector2Int gridPos = GetCurrentPosition();
         Vector2Int squarePos = Squares.Instance.GridToSquareCoordinate(gridPos);
@@ -85,25 +89,28 @@ public class Raider : Unit, ICharacter
                 unit.GetDamage(skillDamage[q]);
             }
         }
+
+        StartCoroutine(SkillEffectEnd(stoneSlash, 1f));
     }
 
+    // 미사일 생성되면서 자기가 안맞게 하는 처리좀, 맞게도 해보기
     public void SkillW(int w)
     {
-        anim.SetTrigger("W");
+        anim.SetTrigger(keyCodes[0].ToString());
 
         //transform.rotation = Quaternion.LookRotation(Vector3.left);
 
-        GameObject _missile = Instantiate(skillW, transform.position, transform.rotation);
+        GameObject _missile = Instantiate(skillEffects[w], transform.position, transform.rotation);
         _missile.GetComponent<Bullet>().SetDamage(skillDamage[w]);
         _missile.GetComponent<Rigidbody>().AddForce(_missile.transform.forward * 10, ForceMode.Impulse);
     }
 
     public void SkillE(int e)
     {
-        anim.SetTrigger("Q");
+        anim.SetTrigger(keyCodes[1].ToString());
 
         //GameObject _buff = Instantiate(buff, transform.position, transform.rotation);
-        GameObject _buff = Instantiate(skillE, transform);
+        GameObject attackDamageBuff = Instantiate(skillEffects[e], transform);
 
         // Buff ON
         for(int i=0; i<4; i++)
@@ -113,12 +120,13 @@ public class Raider : Unit, ICharacter
         }
 
         // 5초뒤, Buff OFF
-        StartCoroutine(BuffOff(e, _buff));
+        StartCoroutine(BuffEnd(attackDamageBuff, e, 5f));
     }
 
-    private IEnumerator BuffOff(int e, GameObject _buff)
+    // 아직 공용으로 사용하지 않는 코루틴 함수
+    private IEnumerator BuffEnd(GameObject buff, int e, float duration)
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(duration);
 
         for (int i = 0; i < 4; i++)
         {
@@ -126,26 +134,43 @@ public class Raider : Unit, ICharacter
             skillDamage[i] -= skillDamage[e];
         }
 
-        Destroy(_buff);
+        Destroy(buff);
     }
 
     // 마우스 클릭으로 제한된범위 내에서 클릭하여 타겟 지정(바닥도 ㅇㅋ)
     public void SkillR(int r)
     {
-        anim.SetTrigger("Q");
+        anim.SetTrigger(keyCodes[0].ToString());
 
-        GameObject _meteor = Instantiate(skillR, transform);
+        GameObject meteor = Instantiate(skillEffects[r], transform.position + transform.forward * 4, Quaternion.identity);
 
         // 메테오 범위내에 데미지 구현
+        Vector2Int gridPos = GetCurrentPosition();
+        Vector2Int squarePos = Squares.Instance.GridToSquareCoordinate(gridPos);
 
-        StartCoroutine(MeteorEnd(_meteor));
-    }
+        Vector2Int[,] skillRange = new Vector2Int[3, 3];
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                skillRange[i, j] = new Vector2Int(i - 1, j - 1);
+                skillRange[i, j] += new Vector2Int(Mathf.RoundToInt(transform.forward.x), Mathf.RoundToInt(transform.forward.z)) * 2;
+            }
+        }
 
-    private IEnumerator MeteorEnd(GameObject _buff)
-    {
-        yield return new WaitForSeconds(5f);
+        foreach (var skill in skillRange)
+        {
+            Unit unit = Squares.Instance.GetObject(squarePos + skill, Type.GetType("Unit")) as Unit;
 
-        Destroy(_buff);
+            // 자기는 안맞게 (unit.gameObject != this.gameObject), 어차피 사정거리가 길어서 현재는 맞을일은 없지만
+            //if (unit)
+            if (unit && unit.gameObject != this.gameObject)
+            {
+                unit.GetDamage(skillDamage[r]);
+            }
+        }
+
+        StartCoroutine(SkillEffectEnd(meteor, 5f));
     }
 }
 

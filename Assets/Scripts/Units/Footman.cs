@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Footman : Unit, ICharacter
 {
@@ -25,6 +26,7 @@ public class Footman : Unit, ICharacter
     {
         moveRange = 1;
         skills = new List<Skill> { SkillQ, SkillW, SkillE, SkillR };
+        skillDamage = new int[4] { 10, 20, 10, 40 };
     }
 
     protected override void SkillCooldown()
@@ -40,29 +42,32 @@ public class Footman : Unit, ICharacter
             if (isSelected && Input.GetKeyDown(keyCodes[i]) && !unitSkills.isCooldown[i])
             {
                 skills[i](i);
+                soundManager.FootmanSkillSound(i).Play();
             }
         }
     }
 
     public void SkillQ(int q)
     {
-        anim.SetTrigger("Q");
-
-        print(name + "Q Skill");
+        anim.SetTrigger(keyCodes[q].ToString());
+        GameObject _stoneSlash = Instantiate(skillEffects[q]);
     }
 
     public void SkillW(int w)
     {
-        print(name + "W Skill");
+        anim.SetTrigger(keyCodes[0].ToString());
+        GameObject _stoneSlash = Instantiate(skillEffects[w]);
     }
 
     public void SkillE(int e)
     {
-        print(name + "E Skill");
+        anim.SetTrigger(keyCodes[1].ToString());
+        GameObject _stoneSlash = Instantiate(skillEffects[e]);
     }
 
     public void SkillR(int r)
     {
-        print(name + "R Skill");
+        anim.SetTrigger(keyCodes[0].ToString());
+        GameObject _stoneSlash = Instantiate(skillEffects[r]);
     }
 }

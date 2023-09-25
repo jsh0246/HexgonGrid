@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     protected KeyCode[] keyCodes;
     protected delegate void Skill(int n);
     protected List<Skill> skills;
+    [SerializeField] protected GameObject[] skillEffects;
 
     [SerializeField] protected SpriteRenderer selector;
     [SerializeField] private RectTransform popupMenu;
@@ -64,6 +65,7 @@ public class Unit : MonoBehaviour
 
         unitSkills = GetComponent<UnitSkills>();
         keyCodes = new KeyCode[4]{ KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R };
+        //skillEffects = new GameObject[4];
 
         // 자주 실행하니까 일단 true로 둔다
         movable = true;
@@ -260,7 +262,6 @@ public class Unit : MonoBehaviour
         {
             Area area = Squares.Instance.GetObject(squarePos + skill, Type.GetType("Area")) as Area;
 
-
             // 뭐가 더 나을까
             area.gameObject.SetActive(false);
             //Destroy(area.gameObject);
@@ -316,5 +317,12 @@ public class Unit : MonoBehaviour
         {
             anim.SetBool("isWalk", false);
         }
+    }
+
+    protected IEnumerator SkillEffectEnd(GameObject skillEffect, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        Destroy(skillEffect);
     }
 }
