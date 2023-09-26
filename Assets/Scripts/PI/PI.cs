@@ -35,7 +35,8 @@ public class PI : MonoBehaviour
 
             if(hitNum == pi[curDecimalPoint]-'0')
             {
-
+                Next();
+                StageManager.Instance.NextStage();
             }
         }
     }

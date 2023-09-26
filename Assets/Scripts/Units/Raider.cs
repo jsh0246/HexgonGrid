@@ -34,7 +34,7 @@ public class Raider : Unit, ICharacter
     {
         moveRange = 3;
         skills = new List<Skill> { SkillQ, SkillW, SkillE, SkillR };
-        skillDamage = new int[4] { 10, 20, 10, 40 };
+        skillDamage = new int[4] { 10, 20, 10, 200 };
     }
 
     protected override void SkillCooldown()

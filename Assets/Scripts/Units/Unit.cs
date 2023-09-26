@@ -263,6 +263,7 @@ public class Unit : MonoBehaviour
             Area area = Squares.Instance.GetObject(squarePos + skill, Type.GetType("Area")) as Area;
 
             // 뭐가 더 나을까
+            StageManager.Instance.AddInactiveArea(area.gameObject);
             area.gameObject.SetActive(false);
             //Destroy(area.gameObject);
         }

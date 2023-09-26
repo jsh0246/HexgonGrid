@@ -76,7 +76,7 @@ public class Pathfinding : MonoBehaviour
     {
         if (unit.isSelected)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) && !mvctrl.moveAllowed)
             {
                 if (SetAStarGoal()){
 
