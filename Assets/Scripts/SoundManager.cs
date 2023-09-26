@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource[] raiderSkillSounds;
     [SerializeField] private AudioSource[] undeadSkillSounds;
     [SerializeField] private AudioSource[] footmanSkillSounds;
+    [SerializeField] private AudioSource[] playerSkillSounds;
 
     public AudioSource RaiderSkillSound(int i)
     {
@@ -21,5 +22,10 @@ public class SoundManager : MonoBehaviour
     public AudioSource FootmanSkillSound(int i)
     {
         return footmanSkillSounds[i];
+    }
+
+    public AudioSource PlayerSkillSound(int i)
+    {
+        return playerSkillSounds[i];
     }
 }

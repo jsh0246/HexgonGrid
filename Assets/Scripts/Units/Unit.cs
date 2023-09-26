@@ -112,7 +112,8 @@ public class Unit : MonoBehaviour
             vList.Add(curPos);
             for (int i = 1; i < moveRange; i++)
             {
-                for (int j = 1; j <= -i + 3; j++)
+                //for (int j = 1; j <= -i + 3; j++)
+                for (int j = 1; j <= moveRange-i; j++)
                 {
                     int a = i * 2;
                     int b = j * 2;
@@ -154,7 +155,7 @@ public class Unit : MonoBehaviour
             {
                 // //if (o != null) 최적화?하기?
                 // //if (o != null)과 위의 if(rangeHit.collider.gameObject) 와 아래의 Dead()에 SetActive() or Destroy는 같이 연관되어있음
-                //if (o != null)
+                if (o != null)
                 {
                     Ray ray = new Ray(Camera.main.transform.position, o.transform.position - Camera.main.transform.position);
                     //Debug.DrawRay(Camera.main.transform.position, o.transform.position - Camera.main.transform.position, Color.blue, 3f);
@@ -167,7 +168,7 @@ public class Unit : MonoBehaviour
                     Vector2Int player = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
                     Vector2Int cell = new Vector2Int((int)o.transform.position.x, (int)o.transform.position.z);
 
-                    if (Calculation.Calc.ManhattenDistance(player, cell) > moveRange * 2)
+                    if (Calc.ManhattenDistance(player, cell) > moveRange * 2)
                     {
                         o.GetComponent<MeshRenderer>().material.color = grass;
                         toRemove.Add(o);
@@ -236,6 +237,7 @@ public class Unit : MonoBehaviour
 
         if (currentHp <= 0)
         {
+            currentHp = 0;
             Dead();
         }
     }
@@ -262,10 +264,14 @@ public class Unit : MonoBehaviour
         {
             Area area = Squares.Instance.GetObject(squarePos + skill, Type.GetType("Area")) as Area;
 
-            // 뭐가 더 나을까
-            StageManager.Instance.AddInactiveArea(area.gameObject);
-            area.gameObject.SetActive(false);
-            //Destroy(area.gameObject);
+            // 왜 null 검사 해야하나? ==> 두개 이상의 유닛이 파괴되었는데 파괴되는 부분이 겹치면 처음유닛은 area를 return받지만 두번쨰 유닛은 area값에 null을 받게 됨 그래서 처리해야함
+            if (area)
+            {
+                StageManager.Instance.AddInactiveArea(area.gameObject);
+                // 뭐가 더 나을까
+                area.gameObject.SetActive(false);
+                //Destroy(area.gameObject);
+            }
         }
     }
 

@@ -164,7 +164,7 @@ public class Undead : Unit, ICharacter
 
                 // 최대거리가 3(6/2)로 하기, 그리드 밖으로 벗어나지 않기(Mathf.Clamp)
                 // 왜 x7이지? 짝수가 맞을거같은데
-                teleportTarget = transform.position + transform.forward * 7;
+                teleportTarget = transform.position + transform.forward * 6;
                 teleportTarget = new Vector3(Mathf.Clamp(teleportTarget.x, -13, 17), teleportTarget.y, Mathf.Clamp(teleportTarget.z, -13, 17));
             }
         }

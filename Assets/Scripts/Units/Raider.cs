@@ -163,6 +163,7 @@ public class Raider : Unit, ICharacter
             Unit unit = Squares.Instance.GetObject(squarePos + skill, Type.GetType("Unit")) as Unit;
 
             // 자기는 안맞게 (unit.gameObject != this.gameObject), 어차피 사정거리가 길어서 현재는 맞을일은 없지만
+            // 같은편이 안맞게 해야할듯 특정스킬은 같은편도 맞게 처리할 수도 있지만
             //if (unit)
             if (unit && unit.gameObject != this.gameObject)
             {

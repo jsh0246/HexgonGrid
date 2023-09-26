@@ -15,7 +15,7 @@ public class UnitSkills : MonoBehaviour
     private float[] cooldownTimer = { 0, 0, 0, 0 };
     private Unit unit;
 
-    public void Start()
+    public void Awake()
     {
         InitVariables();
     }

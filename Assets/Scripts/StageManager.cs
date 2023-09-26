@@ -6,7 +6,7 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
 
-    private List<GameObject> inactiveArea;
+    private HashSet<GameObject> inactiveArea;
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class StageManager : MonoBehaviour
 
     private void InitVariables()
     {
-        inactiveArea = new List<GameObject>();
+        inactiveArea = new HashSet<GameObject>();
     }
 
     public void NextStage()

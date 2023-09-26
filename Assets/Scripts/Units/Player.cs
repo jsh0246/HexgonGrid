@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class Player : Unit, ICharacter
 {
@@ -23,7 +25,7 @@ public class Player : Unit, ICharacter
 
     private void InitVariables()
     {
-        moveRange = 4;
+        moveRange = 5;
         skills = new List<Skill> { SkillQ, SkillW, SkillE, SkillR };
         skillDamage = new int[4] { 10, 20, 10, 40 };
     }
@@ -41,44 +43,56 @@ public class Player : Unit, ICharacter
             if (isSelected && Input.GetKeyDown(keyCodes[i]) && !unitSkills.isCooldown[i])
             {
                 skills[i](i);
-                //soundManager.FootmanSkillSound(i).Play();
+                soundManager.PlayerSkillSound(i).Play();
             }
         }
     }
 
     public void SkillQ(int q)
     {
-        print(keyCodes[q]);
         anim.SetTrigger(keyCodes[q].ToString());
-        GameObject footmanSkillQ = Instantiate(skillEffects[q], transform.position + transform.forward * 2, Quaternion.identity);
-
-        StartCoroutine(SkillEffectEnd(footmanSkillQ, 1f));
+        //anim.SetBool("iSsummoning", true);
+        StartCoroutine(Summon(q));
     }
 
     public void SkillW(int w)
     {
-        print(keyCodes[w]);
         anim.SetTrigger(keyCodes[0].ToString());
-        GameObject footmanSkillW = Instantiate(skillEffects[w], transform.position + transform.forward * 4, Quaternion.identity);
-
-        StartCoroutine(SkillEffectEnd(footmanSkillW, 1f));
+        StartCoroutine(Summon(w));
     }
 
     public void SkillE(int e)
     {
-        print(keyCodes[e]);
         anim.SetTrigger(keyCodes[1].ToString());
-        GameObject footmanSkillE = Instantiate(skillEffects[e], transform.position + transform.forward * 4, Quaternion.identity);
-
-        StartCoroutine(SkillEffectEnd(footmanSkillE, 5f));
+        StartCoroutine(Summon(e));
     }
 
     public void SkillR(int r)
     {
-        print(keyCodes[r]);
-        anim.SetTrigger(keyCodes[0].ToString());
-        GameObject footmanSkillR = Instantiate(skillEffects[r], transform.position + transform.forward * 4, Quaternion.identity);
+        anim.SetTrigger(keyCodes[r].ToString());
+        //GameObject footmanSkillR = Instantiate(skillEffects[r], transform.position + transform.forward * 4, Quaternion.identity);
 
-        StartCoroutine(SkillEffectEnd(footmanSkillR, 8f));
+        //StartCoroutine(SkillEffectEnd(footmanSkillR, 8f));
+    }
+
+    private IEnumerator Summon(int n)
+    {
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit = new RaycastHit();
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, LayerMask.GetMask("Area")))
+                {
+                    Vector3 pos = hit.transform.position;
+                    pos.y = 1f;
+                    GameObject footmanSkillW = Instantiate(skillEffects[n], pos, Quaternion.identity);
+                    //anim.SetBool("iSsummoning", false);
+
+                    yield break;
+                }
+            }
+            yield return null;
+        }
     }
 }
