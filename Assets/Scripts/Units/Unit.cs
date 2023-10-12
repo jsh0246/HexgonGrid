@@ -98,7 +98,7 @@ public class Unit : MonoBehaviour
         return currentPos;
     }
 
-    // 개 거지같이 만듦 ㅋㅋ
+    // 추가 검토 필요
     public void DrawMoveRange()
     {
         if (isSelected && movable)

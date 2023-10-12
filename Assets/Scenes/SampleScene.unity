@@ -3846,22 +3846,6 @@ PrefabInstance:
       value: Undead
       objectReference: {fileID: 0}
     - target: {fileID: 4427528811851434199, guid: 53f8e36141f44d440be8a24f3d797738, type: 3}
-      propertyPath: cooldown.Array.data[0]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4427528811851434199, guid: 53f8e36141f44d440be8a24f3d797738, type: 3}
-      propertyPath: cooldown.Array.data[1]
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4427528811851434199, guid: 53f8e36141f44d440be8a24f3d797738, type: 3}
-      propertyPath: cooldown.Array.data[2]
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4427528811851434199, guid: 53f8e36141f44d440be8a24f3d797738, type: 3}
-      propertyPath: cooldown.Array.data[3]
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4427528811851434199, guid: 53f8e36141f44d440be8a24f3d797738, type: 3}
       propertyPath: cooldownText.Array.data[0]
       value: 
       objectReference: {fileID: 1443097200}
@@ -3941,10 +3925,6 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 963194228}
-    - target: {fileID: 7212672699250581223, guid: 53f8e36141f44d440be8a24f3d797738, type: 3}
-      propertyPath: m_Center.y
-      value: 0.8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4854,15 +4834,15 @@ PrefabInstance:
     - target: {fileID: 8188350907817767737, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: skillEffects.Array.data[0]
       value: 
-      objectReference: {fileID: 803416527}
+      objectReference: {fileID: 2241367410914750162, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
     - target: {fileID: 8188350907817767737, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: skillEffects.Array.data[1]
       value: 
-      objectReference: {fileID: 343679869}
+      objectReference: {fileID: 3235364529772230778, guid: 53f8e36141f44d440be8a24f3d797738, type: 3}
     - target: {fileID: 8188350907817767737, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: skillEffects.Array.data[2]
       value: 
-      objectReference: {fileID: 905690475}
+      objectReference: {fileID: 7910772893849860958, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
     - target: {fileID: 8188350907817767737, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: skillEffects.Array.data[3]
       value: 
@@ -5701,11 +5681,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8161402643372706039, guid: a215f334c5d16de4c83b3634cbbd77e3, type: 3}
   m_PrefabInstance: {fileID: 42094303}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &343679869 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3235364529772230778, guid: 53f8e36141f44d440be8a24f3d797738, type: 3}
-  m_PrefabInstance: {fileID: 246865520}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &348054850
 PrefabInstance:
@@ -10744,11 +10719,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800508955}
   m_CullTransparentMesh: 1
---- !u!1 &803416527 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2241367410914750162, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
-  m_PrefabInstance: {fileID: 7981501320732569849}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &804699954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8161402643372706039, guid: a215f334c5d16de4c83b3634cbbd77e3, type: 3}
@@ -11991,11 +11961,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8161402643372706039, guid: a215f334c5d16de4c83b3634cbbd77e3, type: 3}
   m_PrefabInstance: {fileID: 504326381}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &905690475 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7910772893849860958, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
-  m_PrefabInstance: {fileID: 2232820246040053373}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &912223548
 PrefabInstance:
@@ -22890,7 +22855,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4073056401944215972, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
   m_PrefabInstance: {fileID: 7981501320732569849}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803416527}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a894e31e8b20b4649b33a95f4d32528a, type: 3}
@@ -27592,26 +27557,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1688548636104310229, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
-      propertyPath: m_Center.y
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1898536504031043841, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
-      propertyPath: cooldown.Array.data[0]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1898536504031043841, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
-      propertyPath: cooldown.Array.data[1]
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1898536504031043841, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
-      propertyPath: cooldown.Array.data[2]
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1898536504031043841, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
-      propertyPath: cooldown.Array.data[3]
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 1898536504031043841, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
       propertyPath: cooldownText.Array.data[0]
       value: 
@@ -27664,10 +27609,6 @@ PrefabInstance:
       propertyPath: skillFrames.Array.data[3]
       value: 
       objectReference: {fileID: 57537162}
-    - target: {fileID: 2343986215964929849, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
-      propertyPath: skillEffects.Array.data[0]
-      value: 
-      objectReference: {fileID: 1171201465392465800, guid: 7060e426dfb13984abc06fba65ad1f78, type: 3}
     - target: {fileID: 2485657460550050943, guid: 0b66f63a41307964bb1d13ffed842f32, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -28168,29 +28109,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1025586912020320196, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2241367410914750162, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
       propertyPath: m_Name
       value: Raider
-      objectReference: {fileID: 0}
-    - target: {fileID: 2370660532260905057, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
-      propertyPath: cooldown.Array.data[0]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2370660532260905057, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
-      propertyPath: cooldown.Array.data[1]
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2370660532260905057, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
-      propertyPath: cooldown.Array.data[2]
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2370660532260905057, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
-      propertyPath: cooldown.Array.data[3]
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2370660532260905057, guid: 5d626cc2b98114942ababa1375a9409f, type: 3}
       propertyPath: cooldownText.Array.data[0]

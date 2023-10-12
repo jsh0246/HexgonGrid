@@ -494,7 +494,7 @@ Transform:
   - {fileID: 8808058583113388630}
   - {fileID: 2400416695735845755}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7212672699250581223
 BoxCollider:
@@ -516,7 +516,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.4218433, y: 1.5133977, z: 1.4087577}
-  m_Center: {x: 0.045882583, y: 0.74536395, z: -0.0042817593}
+  m_Center: {x: 0.045882583, y: 0.8, z: -0.0042817593}
 --- !u!54 &1961483392112594699
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -596,10 +596,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   cooldown:
-  - 2
-  - 2
-  - 2
-  - 2
+  - 3
+  - 6
+  - 9
+  - 12
   isCooldown: 00000000
 --- !u!114 &8700115112865310543
 MonoBehaviour:

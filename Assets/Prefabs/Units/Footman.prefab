@@ -1176,7 +1176,7 @@ Transform:
   - {fileID: 4594436434024957460}
   - {fileID: 8901664598842611658}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &876934232390011862
 Animator:
@@ -1219,7 +1219,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.3984232, y: 1.5544531, z: 1.3621669}
-  m_Center: {x: 0.0007481575, y: 0.7714635, z: -0.024025202}
+  m_Center: {x: 0.0007481575, y: 0.8, z: -0.024025202}
 --- !u!54 &2803441699513766234
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   skillEffects:
-  - {fileID: 1171201465392465800, guid: 4aa9f30a28a77224ba84b2a2c334c71b, type: 3}
+  - {fileID: 1171201465392465800, guid: 7060e426dfb13984abc06fba65ad1f78, type: 3}
   - {fileID: 358637981425055526, guid: 8eb503696b886e04faff8fc0f480d473, type: 3}
   - {fileID: 6126188424833946103, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
   - {fileID: 4932088507883938021, guid: 0e5709a7ddb77924090c112cf73bb98a, type: 3}
@@ -1299,10 +1299,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   cooldown:
-  - 2
-  - 2
-  - 2
-  - 2
+  - 3
+  - 6
+  - 9
+  - 12
   isCooldown: 00000000
 --- !u!114 &107765017781393241
 MonoBehaviour:
