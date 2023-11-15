@@ -9893,6 +9893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d3f811d96b2e34c98f2603f94dc7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lollipop: 0
 --- !u!114 &723443937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9956,6 +9957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9344e03f6a8566147936e310017883a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lollipop: 0
 --- !u!1 &727441467
 GameObject:
   m_ObjectHideFlags: 0
