@@ -21,6 +21,13 @@
       <FileName>Assets\GMGM\2 Script\Missile.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="ReadmeBE5" Collapsed="true">
+    <Position X="6.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAQAAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\QuarterView 3D Action BE5\ReadMe\Scripts\ReadmeBE5.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Area" Collapsed="true">
     <Position X="10" Y="0.5" Width="1.5" />
     <TypeIdentifier>
@@ -35,14 +42,14 @@
       <FileName>Assets\Scripts\Billboard.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Cell" Collapsed="true">
-    <Position X="15.25" Y="0.5" Width="1.5" />
+  <Class Name="Cell">
+    <Position X="12.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAACAAAAAIAAIAAAAAAAAAYQAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Cell.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GlobalGrid" Collapsed="true">
+  <Class Name="GlobalGrid">
     <Position X="10" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEA=</HashCode>
@@ -56,28 +63,42 @@
       <FileName>Assets\Scripts\HealthBar.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Highlighter" Collapsed="true">
+  <Class Name="HexGridLayout" Collapsed="true">
     <Position X="13.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAgAQAAAEAAAAAAAAAADAAAgAAAQRACAA=</HashCode>
+      <FileName>Assets\Scripts\HexGridLayout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexRenderer" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAIAAAAAAAgAQABgEAAEAABAAAACAEAACACIRACEA=</HashCode>
+      <FileName>Assets\Scripts\HexRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Highlighter" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AARAAAAAACAAIgACAAAAAAAAAAAAAgAACAAAIAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Mouse\Highlighter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UnitSelector" Collapsed="true">
-    <Position X="17" Y="3.5" Width="1.5" />
+  <Class Name="UnitSelector">
+    <Position X="7.25" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQIAAAAACAgIgAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Assets\Scripts\Mouse\UnitSelector.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MovingController" Collapsed="true">
-    <Position X="11.75" Y="2.5" Width="1.5" />
+  <Class Name="MovingController">
+    <Position X="10.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAQkAgrAgIAAAAAACAAAAAAAAAAAAMAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\MovingController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EQ" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="EQ" BaseTypeListCollapsed="true">
     <Position X="17" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
@@ -85,96 +106,96 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Pathfinding" Collapsed="true">
-    <Position X="13.5" Y="2.5" Width="1.5" />
+  <Class Name="Pathfinding">
+    <Position X="9" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAIEAACggIEAjQAAAIAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Pathfinding.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PI" Collapsed="true">
-    <Position X="15.25" Y="2.5" Width="1.5" />
+  <Class Name="PI">
+    <Position X="10.75" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgSAAAAAACCAMAIAAAAAJAAAAAAAAFAAAAAABAAAAAA=</HashCode>
       <FileName>Assets\Scripts\PI\PI.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PortalBlue" Collapsed="true">
-    <Position X="15.25" Y="1.5" Width="1.5" />
+    <Position X="17" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\PortalBlue.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoundManager" Collapsed="true">
-    <Position X="11.75" Y="3.5" Width="1.5" />
+  <Class Name="SoundManager">
+    <Position X="9" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAEAAAAAAEAABAAgAAAAEAQAAI=</HashCode>
       <FileName>Assets\Scripts\SoundManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Square" Collapsed="true">
-    <Position X="15.25" Y="3.5" Width="1.5" />
+  <Class Name="Square">
+    <Position X="16" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEAAAAAAAIQAAAAAAAIAAAAABgAAAEAAA=</HashCode>
       <FileName>Assets\Scripts\Squares.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Squares" Collapsed="true">
-    <Position X="17" Y="1.5" Width="1.5" />
+  <Class Name="Squares">
+    <Position X="14.25" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAGAgIAAIgAAAIAAAAAEAAAAAAAAQAgAAAAAIEA=</HashCode>
       <FileName>Assets\Scripts\Squares.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="StageManager" Collapsed="true">
-    <Position X="10" Y="3.5" Width="1.5" />
+  <Class Name="StageManager">
+    <Position X="12.5" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAAgAAIBAAAAAABAAAAAAAAAAAQAAAAAAAAEA=</HashCode>
       <FileName>Assets\Scripts\StageManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Timer" Collapsed="true">
-    <Position X="10" Y="4.5" Width="1.5" />
+  <Class Name="Timer">
+    <Position X="14.25" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAACAIAAAAAAAAAACQAgAAAAAAQBAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Timer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Footman" Collapsed="true">
-    <Position X="0.75" Y="2" Width="1.5" />
+  <Class Name="Footman">
+    <Position X="2.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAQAAAAAACAAIgAAAAAAIAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Units\Footman.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Player" Collapsed="true">
-    <Position X="3" Y="2" Width="1.5" />
+  <Class Name="Player">
+    <Position X="4.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAQAAAAAQCAAIgAAAAAAIAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Units\Player.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Raider" Collapsed="true">
-    <Position X="5.25" Y="2" Width="1.5" />
+  <Class Name="Raider">
+    <Position X="2.75" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAQAAAAAACAAIgAAAEAAIAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Units\Raider.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Undead" Collapsed="true">
-    <Position X="7.5" Y="2" Width="1.5" />
+  <Class Name="Undead">
+    <Position X="4.5" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAQAAAAAACAAIjAAAAAAIAAQAAAAAAAAAAQIBAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Units\Undead.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Unit" Collapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
+  <Class Name="Unit">
+    <Position X="0.5" Y="8" Width="1.5" />
     <NestedTypes>
       <Delegate Name="Unit.Skill" Collapsed="true">
         <TypeIdentifier>
@@ -187,29 +208,36 @@
       <FileName>Assets\Scripts\Units\Unit.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UnitSkills" Collapsed="true">
-    <Position X="17" Y="2.5" Width="1.5" />
+  <Class Name="UnitSkills">
+    <Position X="7.25" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAAgAAgIiAAAAAEIAAQACAAAAEgAAAAAgAAAEQ=</HashCode>
       <FileName>Assets\Scripts\UnitSkills.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SpellCooldown" Collapsed="true">
-    <Position X="13.5" Y="3.5" Width="1.5" />
+    <Position X="6.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAIAACAAAKAgAAAAgACAAAAAAIAAAAAAAgAAAAA=</HashCode>
       <FileName>Assets\Web Sources\DotaSpellCoolDown\Scripts\SpellCooldown.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Calculation.Calc" Collapsed="true">
-    <Position X="13.5" Y="0.5" Width="1.5" />
+  <Class Name="Calculation.Calc">
+    <Position X="16" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>Assets\Scripts\Calc.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="ICharacter" Collapsed="true">
-    <Position X="10" Y="7" Width="1.5" />
+  <Struct Name="Face" Collapsed="true">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAQAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Assets\Scripts\HexRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="ICharacter">
+    <Position X="2.75" Y="15.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Units\ICharacter.cs</FileName>
